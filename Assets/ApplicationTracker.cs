@@ -4,11 +4,13 @@ using UnityEngine.UI;
 using TMPro;
 public class ApplicationTracker : MonoBehaviour
 {
+    [SerializeField] private PlayerStatistics playerStats;
     private int totalRejections;
     private int totalInterviews;
     public Button applyButton;
     public TMP_Text rejections;
     public TMP_Text interviews; 
+    public GameObject calendarPanel;
     public GameObject interviewMenuPanel;   // <-- ADD THIS
     public TimeTracker timeTracker;   // <-- ADD THIS
     public PsychologicalState ps;
@@ -19,7 +21,7 @@ public class ApplicationTracker : MonoBehaviour
     {
 
         applyButton.onClick.AddListener(OnApplyClicked);
-        interviewMenuPanel.SetActive(false); // hide menu at start
+        calendarPanel.SetActive(false); // hide menu at start
     
         // Grab ALL buttons under the panel (9am–5pm, or whatever you add)
         interviewTimes = interviewMenuPanel.GetComponentsInChildren<Button>(true);
@@ -45,14 +47,17 @@ public class ApplicationTracker : MonoBehaviour
     }
     void calc_results()
     {
-        float rand = Random.value; 
         float interviewRand = Random.value;
         Debug.Log(interviewRand);
-        if (interviewRand < 1.01f)
+
+        float chanceThreshold = playerStats.InterviewChance;
+        Debug.Log(chanceThreshold);
+
+        if (interviewRand < chanceThreshold)
         {
             totalInterviews++;
             ps.increment_health();
-            interviewMenuPanel.SetActive(true);
+            calendarPanel.SetActive(true);
         }
         else
         {
@@ -73,7 +78,7 @@ public class ApplicationTracker : MonoBehaviour
         Debug.Log($"Interview scheduled for Day {timeTracker.CurrentDay} at {timeStr}");
 
         // Hide menu after selecting
-        interviewMenuPanel.SetActive(false);
+        calendarPanel.SetActive(false);
     }
 
     // Converts "9 AM" → 540, "3 PM" → 900, etc.

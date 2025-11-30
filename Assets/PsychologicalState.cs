@@ -3,10 +3,9 @@ using TMPro;
 
 public class PsychologicalState : MonoBehaviour
 {
+    [SerializeField] private PlayerStatistics playerStats;
     [SerializeField] private int _health = 100;
-
     public TMP_Text psyche;
-
     public int Health
     {
         get => _health;
@@ -19,6 +18,15 @@ public class PsychologicalState : MonoBehaviour
 
     void Start()
     {
+        if (playerStats != null)
+        {
+            _health = playerStats.StartingMorale;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerStatistics reference missing on PsychologicalState, using default starting morale.");
+        }
+
         update_morale();
     }
 
@@ -29,11 +37,13 @@ public class PsychologicalState : MonoBehaviour
 
     public void decrement_health()
     {
-        Health -= 10;  
+        int moraleStep = playerStats != null ? playerStats.MoraleStep : 10;
+        Health -= moraleStep;  
     }
 
     public void increment_health()
     {
-        Health += 10;    
+        int moraleStep = playerStats != null ? playerStats.MoraleStep : 10;
+        Health += moraleStep;    
     }
 }
