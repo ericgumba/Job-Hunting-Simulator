@@ -22,6 +22,7 @@ public class ApplicationTracker : MonoBehaviour
 
         applyButton.onClick.AddListener(OnApplyClicked);
         calendarPanel.SetActive(false); // hide menu at start
+        update_labels();
     
         // Grab ALL buttons under the panel (9am–5pm, or whatever you add)
         interviewTimes = interviewMenuPanel.GetComponentsInChildren<Button>(true);
@@ -41,9 +42,16 @@ public class ApplicationTracker : MonoBehaviour
         }
     }
 
+    void update_labels()
+    {
+        rejections.text = "Rejections: " + totalRejections;
+        interviews.text = "Interviews: " + totalInterviews;
+    }
+
     void OnApplyClicked()
     {
         calc_results();
+        update_labels();
     }
     void calc_results()
     {
@@ -52,6 +60,7 @@ public class ApplicationTracker : MonoBehaviour
 
         float chanceThreshold = playerStats.InterviewChance;
         Debug.Log(chanceThreshold);
+        playerStats.AddExperience(1); // Add experience points for applying
 
         if (interviewRand < chanceThreshold)
         {
@@ -65,8 +74,6 @@ public class ApplicationTracker : MonoBehaviour
             ps.decrement_health();
             
         } 
-        rejections.text = "Rejections: " + totalRejections;
-        interviews.text = "Interviews: " + totalInterviews;
     }
 
     // Update is called once per frame

@@ -1,11 +1,14 @@
 using UnityEngine;
 using TMPro;
 
+using UnityEngine.UI;
+
 public class PsychologicalState : MonoBehaviour
 {
     [SerializeField] private PlayerStatistics playerStats;
     [SerializeField] private int _health = 100;
     public TMP_Text psyche;
+    public Button restButton;
     public int Health
     {
         get => _health;
@@ -18,6 +21,7 @@ public class PsychologicalState : MonoBehaviour
 
     void Start()
     {
+        restButton.onClick.AddListener(increment_health);
         if (playerStats != null)
         {
             _health = playerStats.StartingMorale;

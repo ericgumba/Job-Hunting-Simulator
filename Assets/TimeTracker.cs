@@ -7,6 +7,7 @@ public class TimeTracker : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     public Button applyButton;
+    public Button restButton;
     public TMP_Text clock;    // or use Text if you're using the old UI
     private int totalMinutes = 0;
     public TMP_Text date; 
@@ -17,7 +18,8 @@ public class TimeTracker : MonoBehaviour
     public string CurrentTimeString => CalcTime(totalMinutes);
     void Start()
     {
-        applyButton.onClick.AddListener(OnApplyClicked);
+        applyButton.onClick.AddListener(IncrementTimeAndCheckNextDay);
+        restButton.onClick.AddListener(IncrementTimeAndCheckNextDay);
 
     }
     public string CalcTime(int mins)
@@ -40,7 +42,7 @@ public class TimeTracker : MonoBehaviour
         return $"{hour12}:{minute:D2}{suffix}";
     }
 
-    void OnApplyClicked()
+    void IncrementTimeAndCheckNextDay()
     {
         totalMinutes += 60;
         string currentTime = CalcTime(totalMinutes);
