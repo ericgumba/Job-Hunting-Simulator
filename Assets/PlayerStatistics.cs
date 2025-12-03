@@ -4,7 +4,7 @@ using TMPro;
 
 public class PlayerStatistics : MonoBehaviour
 {
-    private float interviewChance = .005f;
+    private float interviewChance = .001f;
     private int startingMorale = 100;
     private int moraleStep = 10;
     private int exp = 0;
@@ -27,7 +27,10 @@ public class PlayerStatistics : MonoBehaviour
         update_xp();
     }
 
-    public float InterviewChance => interviewChance;
+    public float InterviewChance {
+        get => interviewChance;
+        set => interviewChance = value;
+    }
     public int StartingMorale => startingMorale;
     public int MoraleStep => moraleStep;
 }

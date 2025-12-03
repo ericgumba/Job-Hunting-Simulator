@@ -10,7 +10,7 @@ public class ApplicationTracker : MonoBehaviour
     public Button applyButton;
     public TMP_Text rejections;
     public TMP_Text interviews; 
-    public GameObject calendarPanel;
+    public GameObject popupCanvas;
     public GameObject interviewMenuPanel;   // <-- ADD THIS
     public TimeTracker timeTracker;   // <-- ADD THIS
     public PsychologicalState ps;
@@ -21,7 +21,7 @@ public class ApplicationTracker : MonoBehaviour
     {
 
         applyButton.onClick.AddListener(OnApplyClicked);
-        calendarPanel.SetActive(false); // hide menu at start
+        popupCanvas.SetActive(false); // hide menu at start
         update_labels();
     
         // Grab ALL buttons under the panel (9am–5pm, or whatever you add)
@@ -66,7 +66,7 @@ public class ApplicationTracker : MonoBehaviour
         {
             totalInterviews++;
             ps.increment_health();
-            calendarPanel.SetActive(true);
+            popupCanvas.SetActive(true);
         }
         else
         {
@@ -85,7 +85,7 @@ public class ApplicationTracker : MonoBehaviour
         Debug.Log($"Interview scheduled for Day {timeTracker.CurrentDay} at {timeStr}");
 
         // Hide menu after selecting
-        calendarPanel.SetActive(false);
+        popupCanvas.SetActive(false);
     }
 
     // Converts "9 AM" → 540, "3 PM" → 900, etc.
