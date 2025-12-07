@@ -5,7 +5,12 @@ using TMPro;
 public class PlayerStatistics : MonoBehaviour
 {
     private float interviewChance = .001f;
+    private float firstInterviewChance = .05f;
+    private float secondInterviewChance = .05f;
+    private float thirdInterviewChance = .05f;
+    private float finalInterviewChance = .1f;
     private int startingMorale = 100;
+    private int maxMorale = 100;
     private int moraleStep = 10;
     private int exp = 0;
 
@@ -31,6 +36,30 @@ public class PlayerStatistics : MonoBehaviour
         get => interviewChance;
         set => interviewChance = value;
     }
+
+    public float FirstInterviewChance {
+        get => firstInterviewChance;
+        set => firstInterviewChance = value;
+    }
+    public float SecondInterviewChance {
+        get => secondInterviewChance;
+        set => secondInterviewChance = value;
+    }
+    public float ThirdInterviewChance {
+        get => thirdInterviewChance;
+        set => thirdInterviewChance = value;
+    }
+    public float FinalInterviewChance {
+        get => finalInterviewChance;
+        set => finalInterviewChance = value;
+    }
     public int StartingMorale => startingMorale;
-    public int MoraleStep => moraleStep;
+    public int MoraleStep {
+        get => moraleStep;
+        set => moraleStep = value;
+    }
+    public int MaxMorale {
+        get => maxMorale;
+        set => maxMorale = value;
+    }
 }

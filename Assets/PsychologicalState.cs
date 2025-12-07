@@ -47,7 +47,7 @@ public class PsychologicalState : MonoBehaviour
 
     public void increment_health()
     {
-        int moraleStep = playerStats != null ? playerStats.MoraleStep : 10;
-        Health += moraleStep;    
+        int moraleStep = 10;
+        Health = Mathf.Min(playerStats.MaxMorale, Health + moraleStep);  
     }
 }
