@@ -2,12 +2,16 @@ public sealed class ApplyForJobSystem
 {
     private readonly ApplicationTracker tracker;
     private readonly PlayerStatistics playerStats;
+    private readonly TimeDateTracker timeDateTracker;
 
     public ApplyForJobSystem(
-        ApplicationTracker tracker, PlayerStatistics playerStats)
+        ApplicationTracker tracker, 
+        PlayerStatistics playerStats,
+        TimeDateTracker timeDateTracker)
     {
         this.tracker = tracker;
         this.playerStats = playerStats;
+        this.timeDateTracker = timeDateTracker;
     }
 
     public string GetStats()
@@ -21,12 +25,15 @@ public sealed class ApplyForJobSystem
     /// </summary>
     public bool Apply()
     {
-        bool gotInterview = UnityEngine.Random.value < playerStats.InterviewChance;
+        // bool gotInterview = UnityEngine.Random.value < playerStats.InterviewChance;
+        bool gotInterview = UnityEngine.Random.value < 0.1f; // TEMPORARY   
         
         if (gotInterview)
             tracker.RecordInterview();
         else
             tracker.RecordRejection();
+        
+        timeDateTracker.AdvanceTime();
 
         return gotInterview;
     }
