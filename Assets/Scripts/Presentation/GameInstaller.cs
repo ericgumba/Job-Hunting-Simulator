@@ -5,6 +5,7 @@ public class GameInstaller : MonoBehaviour
 {
     [Header("Scene references")]
     [SerializeField] private ApplyButtonController applyButtonController;
+    [SerializeField] private RestController restController;
     [SerializeField] private ApplicationsHudView applicationsHudView;
     [SerializeField] private TimeDateHudView timeDateHudView;
     [SerializeField] private PopupCalendarController popupCalendarController;
@@ -14,9 +15,11 @@ public class GameInstaller : MonoBehaviour
 
     private ApplicationTracker tracker;
     private ApplyForJobSystem applySystem;
+    private RestSystem restSystem;
     private ConfirmInterviewSystem confirmInterviewSystem;
     private PlayerStatistics playerStats;
     private TimeDateTracker timeDateTracker;
+    private InterviewTracker interviewTracker;
 
     void Awake()
     {
@@ -27,18 +30,22 @@ public class GameInstaller : MonoBehaviour
         playerStats = new PlayerStatistics(cfg);
         timeDateTracker = new TimeDateTracker();
         tracker = new ApplicationTracker();
+        interviewTracker = new InterviewTracker();
 
         // Systems
         applySystem = new ApplyForJobSystem(tracker, playerStats, timeDateTracker);
-        confirmInterviewSystem = new ConfirmInterviewSystem(timeDateTracker);
+        restSystem = new RestSystem(timeDateTracker);
+        confirmInterviewSystem = new ConfirmInterviewSystem(timeDateTracker, interviewTracker);
         // Bind UI to the same instances
 
         // Presentation
         applyButtonController.Bind(applySystem);
+        restController.Bind(restSystem);
         applicationsHudView.Bind(tracker);
         timeDateHudView.Bind(timeDateTracker);
         popupCalendarController.Bind(tracker);
         popupCalendarController.Bind(confirmInterviewSystem);
+        
 
         
     }

@@ -19,39 +19,56 @@ public sealed class InterviewTracker
     }
 
     private readonly List<InterviewDate> _interviewDates = new List<InterviewDate>();
-    private readonly TimeDateTracker _timeDateTracker;
-
-    public TimeDateTracker TimeDateTracker => _timeDateTracker;
 
     public event Action InterviewPopped;
 
-    public InterviewTracker(TimeDateTracker timeDateTracker)
+    public event Action Changed;
+
+    public InterviewTracker()
     {
-        _timeDateTracker = timeDateTracker;
-        _timeDateTracker.Changed += OnTimeChanged;
+    }
+
+    private void sortInterviewDates()
+    {
+        _interviewDates.Sort((a, b) =>
+        {
+            if (a.Day != b.Day)
+            {
+                return a.Day.CompareTo(b.Day);
+            }
+            return a.Hour.CompareTo(b.Hour);
+        });
+        Changed?.Invoke();
+    }
+
+    public InterviewDate? PeekNextInterviewDate()
+    {
+        if (_interviewDates.Count == 0)
+        {
+            return null;
+        }
+        return _interviewDates[0];
     }
 
     public bool TryAddInterviewDate(InterviewDate interviewDate)
     {
-        if (interviewDate.Day <= _timeDateTracker.Days)
-        {
-            return false;
-        }
-
+        Debug.Log($"Trying to add interview date: Day {interviewDate.Day}, Hour {interviewDate.Hour}");
         _interviewDates.Add(interviewDate);
+        sortInterviewDates();
         return true;
     }
 
-    private void OnTimeChanged()
+    public void NotifyTimeChanged(int day, int hour)
     {
         for (int i = _interviewDates.Count - 1; i >= 0; i--)
         {
             var interviewDate = _interviewDates[i];
-            if (interviewDate.Day == _timeDateTracker.Days &&
-                interviewDate.Hour == _timeDateTracker.Hours)
+            if (interviewDate.Day == day &&
+                interviewDate.Hour == hour)
             {
                 _interviewDates.RemoveAt(i);
                 InterviewPopped?.Invoke();
+                sortInterviewDates();
             }
         }
     }
