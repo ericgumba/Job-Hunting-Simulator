@@ -8,11 +8,13 @@ public sealed class InterviewTracker
     {
         public int Day;
         public int Hour;
+        public int Lvl;
 
-        public InterviewDate(int day, int hour)
+        public InterviewDate(int day, int hour, int lvl = 1)
         {
             Day = day;
             Hour = hour;
+            Lvl = lvl;
         }
     }
 
