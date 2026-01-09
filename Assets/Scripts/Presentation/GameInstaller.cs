@@ -9,6 +9,7 @@ public class GameInstaller : MonoBehaviour
     [SerializeField] private ApplicationsHudView applicationsHudView;
     [SerializeField] private TimeDateHudView timeDateHudView;
     [SerializeField] private PopupCalendarController popupCalendarController;
+    [SerializeField] private UpcomingInterviewController upcomingInterviewController;
 
     [Header("Config")]
     [SerializeField] private PlayerStatsConfig playerStatsConfig;
@@ -45,7 +46,7 @@ public class GameInstaller : MonoBehaviour
         timeDateHudView.Bind(timeDateTracker);
         popupCalendarController.Bind(tracker);
         popupCalendarController.Bind(confirmInterviewSystem);
-        
+        upcomingInterviewController.Bind(interviewTracker);
 
         
     }
