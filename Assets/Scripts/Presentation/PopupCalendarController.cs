@@ -9,7 +9,7 @@ public class PopupCalendarController : MonoBehaviour
     [SerializeField] private Button incrementButton;
     [SerializeField] private Button decrementButton;
     [SerializeField] private Button[] timeButtons;
-    [SerializeField] private int dayOffset = 1;
+    private int dayOffset = 1;
     [SerializeField] private TMPro.TMP_Text Text;
 
     private void Awake()
