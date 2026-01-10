@@ -1,6 +1,14 @@
 using System;
 
-public sealed class ConfirmInterviewSystem
+// Interface
+public interface IConfirmInterviewSystem
+{
+    bool ConfirmInterview(string timeLabel, int offsetDays);
+    int CurrentDate();
+    bool ContainsInterviewAt(int day, int hour);
+}
+
+public sealed class ConfirmInterviewSystem : IConfirmInterviewSystem
 {
     private readonly TimeDateTracker timeDateTracker;
     private readonly InterviewTracker interviewTracker;
@@ -25,5 +33,10 @@ public sealed class ConfirmInterviewSystem
             timeDateTracker.Days + offsetDays,
             hour);
         return interviewTracker.TryAddInterviewDate(interviewDate);
+    }
+
+    public bool ContainsInterviewAt(int day, int hour)
+    {
+        return interviewTracker.ContainsInterviewAt(day, hour);
     }
 }

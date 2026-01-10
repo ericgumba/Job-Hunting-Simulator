@@ -41,6 +41,18 @@ public sealed class InterviewTracker
         Changed?.Invoke();
     }
 
+    public bool ContainsInterviewAt(int day, int hour)
+    {
+        foreach (var interviewDate in _interviewDates)
+        {
+            if (interviewDate.Day == day && interviewDate.Hour == hour)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public InterviewDate? PeekNextInterviewDate()
     {
         if (_interviewDates.Count == 0)

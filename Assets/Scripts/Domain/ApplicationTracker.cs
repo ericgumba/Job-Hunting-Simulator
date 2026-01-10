@@ -6,6 +6,8 @@ public sealed class ApplicationTracker
     public int TotalInterviews { get; private set; }
     public int TotalRejections { get; private set; }
 
+    public int OngoingApplications { get; private set; }
+
     public int TotalApplications => TotalInterviews + TotalRejections;
 
     public int TotalFailedLvlOneInterviews { get; set; }

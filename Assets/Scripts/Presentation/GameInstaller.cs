@@ -17,7 +17,7 @@ public class GameInstaller : MonoBehaviour
     private ApplicationTracker tracker;
     private ApplyForJobSystem applySystem;
     private RestSystem restSystem;
-    private ConfirmInterviewSystem confirmInterviewSystem;
+    private IConfirmInterviewSystem confirmInterviewSystem;
     private PlayerStatistics playerStats;
     private TimeDateTracker timeDateTracker;
     private InterviewTracker interviewTracker;

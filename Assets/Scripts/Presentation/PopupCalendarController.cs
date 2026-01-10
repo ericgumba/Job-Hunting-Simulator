@@ -5,7 +5,7 @@ public class PopupCalendarController : MonoBehaviour
 {
 
     private ApplicationTracker tracker;
-    private ConfirmInterviewSystem confirmInterviewSystem;
+    private IConfirmInterviewSystem confirmInterviewSystem;
     [SerializeField] private Button incrementButton;
     [SerializeField] private Button decrementButton;
     [SerializeField] private Button[] timeButtons;
@@ -46,7 +46,7 @@ public class PopupCalendarController : MonoBehaviour
         tracker.InterviewRecorded += Show;
     }
 
-    public void Bind(ConfirmInterviewSystem confirmInterviewSystem)
+    public void Bind(IConfirmInterviewSystem confirmInterviewSystem)
     {
         this.confirmInterviewSystem = confirmInterviewSystem;
         // No-op
@@ -56,6 +56,8 @@ public class PopupCalendarController : MonoBehaviour
     {
         Debug.Log("Showing popup calendar");
         gameObject.SetActive(true);
+        UpdateDayText();
+        UpdateButtonStates();
     }
 
     private void IncrementDay()
@@ -99,6 +101,20 @@ public class PopupCalendarController : MonoBehaviour
             decrementButton.interactable = dayOffset > 1;
         if (incrementButton != null)
             incrementButton.interactable = dayOffset <= 14;
+
+        foreach (var button in timeButtons) {
+            if (button == null)
+                continue;
+
+            var timeLabel = button.name;
+            int hour = int.Parse(timeLabel);
+
+            if (confirmInterviewSystem != null)
+            {
+                bool canSchedule = !confirmInterviewSystem.ContainsInterviewAt(confirmInterviewSystem.CurrentDate() + dayOffset, hour);
+                button.interactable = canSchedule;
+            }
+        }
     }
 
     void OnDestroy()
@@ -106,6 +122,7 @@ public class PopupCalendarController : MonoBehaviour
         if (tracker != null)
             tracker.InterviewRecorded -= Show;
     }
+
     private void UpdateDayText()
     {
         if (Text != null)
@@ -113,5 +130,4 @@ public class PopupCalendarController : MonoBehaviour
             Text.text = $"(Day {dayOffset + confirmInterviewSystem.CurrentDate()})";
         }
     }
-
 }

@@ -11,6 +11,7 @@ public sealed class TimeDateTracker
         $"{(Hours % 12 == 0 ? 12 : Hours % 12)} {(Hours < 12 ? "AM" : "PM")}";
     
     public event Action Changed;
+    public event Action EndOfDayReached;
 
     public TimeDateTracker(int startHour = 8, int startDay = 0)
     {
@@ -23,6 +24,7 @@ public sealed class TimeDateTracker
         Hours++;
         if (Hours >= 24)
         {
+            EndOfDayReached?.Invoke();
             Hours = 8;
             Days++;
         }

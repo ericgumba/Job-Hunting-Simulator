@@ -58,4 +58,18 @@ public class InterviewTrackerTests
 
         Assert.AreEqual(2, fired);
     }
+
+    [Test]
+    public void EndOfDayReached()
+    {
+        var timeDateTracker = new TimeDateTracker(startHour: 22, startDay: 0);
+        int fired = 0;
+        timeDateTracker.EndOfDayReached += () => fired++;
+
+        timeDateTracker.AdvanceTime(); // Advances to 24 -> should trigger EndOfDayReached
+        Assert.AreEqual(0, fired);
+
+        timeDateTracker.AdvanceTime(); // Advances to 24 -> should trigger EndOfDayReached
+        Assert.AreEqual(1, fired);
+    }
 }
