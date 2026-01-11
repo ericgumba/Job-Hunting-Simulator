@@ -18,12 +18,14 @@ public sealed class InterviewSystem
         this.applicationTracker = applicationTracker;
         this.timeDateTracker = timeDateTracker;
         this.playerStats = playerStats;
+        Debug.Log("InterviewSystem initialized.");
 
         timeDateTracker.Changed += TryPerformInterview;
     }
 
     public void TryPerformInterview()
     {
+        Debug.Log("Checking for interviews to perform...");
         var nextInterview = interviewTracker.PeekNextInterviewDate();
         if (!nextInterview.HasValue)
         {
@@ -40,6 +42,20 @@ public sealed class InterviewSystem
         var passed = Random.value < GetInterviewChance(interviewDate.Lvl);
         applicationTracker.RecordInterviewEvent(passed, interviewDate.Lvl);
         interviewTracker.NotifyTimeChanged(timeDateTracker.Days, timeDateTracker.Hours);
+        Log_Results();
+    }
+
+    void Log_Results()
+    {
+        Debug.Log($"Total Interviews: {applicationTracker.TotalInterviews} " +
+                  $"Passed Lvl 1: {applicationTracker.TotalPassedLvlOneInterviews} " +
+                  $"Failed Lvl 1: {applicationTracker.TotalFailedLvlOneInterviews} " +
+                  $"Passed Lvl 2: {applicationTracker.TotalPassedLvlTwoInterviews} " +
+                  $"Failed Lvl 2: {applicationTracker.TotalFailedLvlTwoInterviews} " +
+                  $"Passed Lvl 3: {applicationTracker.TotalPassedLvlThreeInterviews} " +
+                  $"Failed Lvl 3: {applicationTracker.TotalFailedLvlThreeInterviews} " +
+                  $"Passed Lvl 4: {applicationTracker.TotalPassedLvlFourInterviews} " +
+                  $"Failed Lvl 4: {applicationTracker.TotalFailedLvlFourInterviews} ");
     }
 
     private float GetInterviewChance(int level)

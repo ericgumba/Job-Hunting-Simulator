@@ -72,4 +72,26 @@ public class InterviewTrackerTests
         timeDateTracker.AdvanceTime(); // Advances to 24 -> should trigger EndOfDayReached
         Assert.AreEqual(1, fired);
     }
+
+    [Test]
+    public void InterviewSystem_TryPerformInterview_RecordsInterviewEvent()
+    {
+        var interviewTracker = new InterviewTracker();
+        var applicationTracker = new ApplicationTracker();
+        var timeDateTracker = new TimeDateTracker(startHour: 9, startDay: 0);
+        var playerStats = new PlayerStatistics();
+
+        var interviewSystem = new InterviewSystem(
+            interviewTracker,
+            applicationTracker,
+            timeDateTracker,
+            playerStats);
+
+        var interviewDate = new InterviewTracker.InterviewDate(day: 0, hour: 10, lvl: 1);
+        interviewTracker.TryAddInterviewDate(interviewDate);
+
+        timeDateTracker.AdvanceTime(); // Advance to hour 10
+
+        Assert.AreEqual(1, applicationTracker.TotalFailedLvlOneInterviews + applicationTracker.TotalPassedLvlOneInterviews);
+    }
 }

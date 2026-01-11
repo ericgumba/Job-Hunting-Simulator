@@ -18,6 +18,7 @@ public class GameInstaller : MonoBehaviour
     private ApplyForJobSystem applySystem;
     private RestSystem restSystem;
     private IConfirmInterviewSystem confirmInterviewSystem;
+    private InterviewSystem interviewSystem;
     private PlayerStatistics playerStats;
     private TimeDateTracker timeDateTracker;
     private InterviewTracker interviewTracker;
@@ -37,6 +38,7 @@ public class GameInstaller : MonoBehaviour
         applySystem = new ApplyForJobSystem(tracker, playerStats, timeDateTracker);
         restSystem = new RestSystem(timeDateTracker);
         confirmInterviewSystem = new ConfirmInterviewSystem(timeDateTracker, interviewTracker);
+        interviewSystem = new InterviewSystem(interviewTracker, tracker, timeDateTracker, playerStats);
         // Bind UI to the same instances
 
         // Presentation
@@ -48,6 +50,5 @@ public class GameInstaller : MonoBehaviour
         popupCalendarController.Bind(confirmInterviewSystem);
         upcomingInterviewController.Bind(interviewTracker);
 
-        
     }
 }

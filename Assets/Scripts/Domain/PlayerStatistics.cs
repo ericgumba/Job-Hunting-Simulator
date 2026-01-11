@@ -18,6 +18,13 @@ public sealed class PlayerStatistics
     public int MaxMorale => config.maxMorale;
     public int MoraleStep => config.moraleStep;
 
+    public PlayerStatistics()
+    {
+        // default config values
+        this.config = new PlayerStatsConfigData(new PlayerStatsConfig());
+        Morale = config.startingMorale;
+        Experience = 0;
+    }
     public PlayerStatistics(PlayerStatsConfigData config)
     {
         this.config = config;

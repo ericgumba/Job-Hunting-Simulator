@@ -80,6 +80,7 @@ public sealed class InterviewTracker
             {
                 _interviewDates.RemoveAt(i);
                 InterviewPopped?.Invoke();
+                Changed?.Invoke();
                 sortInterviewDates();
             }
         }
