@@ -26,7 +26,7 @@ public sealed class ApplyForJobSystem
     public bool Apply()
     {
         // bool gotInterview = UnityEngine.Random.value < playerStats.InterviewChance;
-        bool gotInterview = UnityEngine.Random.value < 1; // TEMPORARY   
+        bool gotInterview = UnityEngine.Random.value < 0.5f; // TEMPORARY   
         
         if (gotInterview)
             tracker.RecordInterview();
