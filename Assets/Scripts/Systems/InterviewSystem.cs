@@ -42,8 +42,7 @@ public sealed class InterviewSystem
         var passed = Random.value < GetInterviewChance(interviewDate.Lvl);
         applicationTracker.RecordInterviewEvent(passed, interviewDate.Lvl);
         interviewTracker.NotifyTimeChanged(timeDateTracker.Days, timeDateTracker.Hours);
-        timeDateTracker.AdvanceTime(); // Advance time after interview
-        Log_Results();
+        timeDateTracker.AdvanceTime(); // Advance time after interview 
     }
 
     void Log_Results()

@@ -16,25 +16,15 @@ public sealed class ApplyForJobSystem
 
     public string GetStats()
     {
-        return $"totalInterviews: {tracker.TotalInterviews} totalRejections: {tracker.TotalRejections}";
+        return $"totalInterviews: {tracker.TotalPassedResumeSubmissions()} totalRejections: {tracker.TotalFailedResumeSubmissions()}";
     }
 
     /// <summary>
     /// Executes the "apply for job" action.
     /// Returns true if interview, false if rejection.
     /// </summary>
-    public bool Apply()
+    public void Apply()
     {
-        // bool gotInterview = UnityEngine.Random.value < playerStats.InterviewChance;
-        bool gotInterview = UnityEngine.Random.value < 0.5f; // TEMPORARY   
-        
-        if (gotInterview)
-            tracker.RecordInterview();
-        else
-            tracker.RecordRejection();
-        
-        timeDateTracker.AdvanceTime();
-
-        return gotInterview;
+        tracker.RecordResumeSubmission();
     }
 }

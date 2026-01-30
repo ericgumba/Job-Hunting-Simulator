@@ -9,12 +9,11 @@ public sealed class PlayerStatistics
 
     public event Action Changed;
 
-    public float InterviewChance => config.interviewChance;
-    public float FirstInterviewChance => config.firstInterviewChance;
-    public float SecondInterviewChance => config.secondInterviewChance;
-    public float ThirdInterviewChance => config.thirdInterviewChance;
-    public float FinalInterviewChance => config.finalInterviewChance;
-
+    public float ResumeSubmission => config.ResumeSubmission;
+    public float RecruiterScreening => config.RecruiterScreening;
+    public float LevelOne => config.LevelOne;
+    public float LevelTwo => config.LevelTwo;
+    public float LevelThree => config.LevelThree;
     public int MaxMorale => config.maxMorale;
     public int MoraleStep => config.moraleStep;
 
@@ -54,18 +53,19 @@ public sealed class PlayerStatistics
 /// Plain data copy of ScriptableObject values.
 /// This keeps PlayerStatistics Unity-free.
 /// </summary>
+/// 
 public readonly struct PlayerStatsConfigData
 {
-    public readonly float interviewChance, firstInterviewChance, secondInterviewChance, thirdInterviewChance, finalInterviewChance;
+    public readonly float ResumeSubmission, RecruiterScreening, LevelOne, LevelTwo, LevelThree;
     public readonly int startingMorale, maxMorale, moraleStep;
 
     public PlayerStatsConfigData(PlayerStatsConfig cfg)
     {
-        interviewChance = cfg.interviewChance;
-        firstInterviewChance = cfg.firstInterviewChance;
-        secondInterviewChance = cfg.secondInterviewChance;
-        thirdInterviewChance = cfg.thirdInterviewChance;
-        finalInterviewChance = cfg.finalInterviewChance;
+        ResumeSubmission = cfg.ResumeSubmission;
+        RecruiterScreening = cfg.RecruiterScreening;
+        LevelOne = cfg.LevelOne;
+        LevelTwo = cfg.LevelTwo;
+        LevelThree = cfg.LevelThree;
 
         startingMorale = cfg.startingMorale;
         maxMorale = cfg.maxMorale;

@@ -24,7 +24,7 @@ public class ApplyButtonController : MonoBehaviour
 
     void OnClicked()
     {
-        bool gotInterview = applySystem.Apply();
+        applySystem.Apply();
         Debug.Log(applySystem.GetStats());
         // Later:
         // - show popup

@@ -20,7 +20,7 @@ public sealed class InterviewTracker
 
     private readonly List<InterviewDate> _interviewDates = new List<InterviewDate>();
 
-    public event Action InterviewPopped;
+    public event Action<int> InterviewPopped;
 
     public event Action Changed;
 
@@ -79,7 +79,7 @@ public sealed class InterviewTracker
                 interviewDate.Hour == hour)
             {
                 _interviewDates.RemoveAt(i);
-                InterviewPopped?.Invoke();
+                InterviewPopped?.Invoke(interviewDate.Lvl);
                 Changed?.Invoke();
                 sortInterviewDates();
             }
