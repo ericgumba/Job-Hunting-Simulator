@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class TimeTextViewBase : MonoBehaviour
 {
     protected TMP_Text Text { get; private set; }
-    protected TimeDateTracker Tracker { get; private set; }
+    protected CurrentTimeDate Tracker { get; private set; }
     protected virtual void Awake()
     {
         Text = GetComponent<TMP_Text>();
@@ -14,7 +14,7 @@ public abstract class TimeTextViewBase : MonoBehaviour
         
     }
 
-    public void Bind(TimeDateTracker tracker)
+    public void Bind(CurrentTimeDate tracker)
     {
         // Unbind previous (in case Bind is called again)
         if (Tracker != null)

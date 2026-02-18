@@ -31,8 +31,9 @@ public class InterviewTrackerTests
     {
         var interviewTracker = new InterviewTracker();
         int fired = 0;
+        int lvl_result = 0;
 
-        interviewTracker.InterviewPopped += () => fired++;
+        interviewTracker.InterviewPopped += (int level) => {fired++; lvl_result = level;};
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(new InterviewTracker.InterviewDate(day: 1, hour: 9)));
 
         interviewTracker.NotifyTimeChanged(day: 1, hour: 8);
@@ -42,6 +43,7 @@ public class InterviewTrackerTests
         interviewTracker.NotifyTimeChanged(day: 1, hour: 9);
 
         Assert.AreEqual(1, fired);
+        Assert.AreEqual(lvl_result, 1);
     }
 
     [Test]
@@ -50,7 +52,7 @@ public class InterviewTrackerTests
         var interviewTracker = new InterviewTracker();
         int fired = 0;
 
-        interviewTracker.InterviewPopped += () => fired++;
+        interviewTracker.InterviewPopped += (int _) => fired++;
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(new InterviewTracker.InterviewDate(day: 1, hour: 8)));
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(new InterviewTracker.InterviewDate(day: 1, hour: 8)));
 
@@ -62,7 +64,7 @@ public class InterviewTrackerTests
     [Test]
     public void EndOfDayReached()
     {
-        var timeDateTracker = new TimeDateTracker(startHour: 22, startDay: 0);
+        var timeDateTracker = new CurrentTimeDate(startHour: 22, startDay: 0);
         int fired = 0;
         timeDateTracker.EndOfDayReached += () => fired++;
 
@@ -78,7 +80,7 @@ public class InterviewTrackerTests
     {
         var interviewTracker = new InterviewTracker();
         var applicationTracker = new ApplicationTracker();
-        var timeDateTracker = new TimeDateTracker(startHour: 9, startDay: 0);
+        var timeDateTracker = new CurrentTimeDate(startHour: 9, startDay: 0);
         var playerStats = new PlayerStatistics();
 
         var interviewSystem = new InterviewSystem(
@@ -92,6 +94,6 @@ public class InterviewTrackerTests
 
         timeDateTracker.AdvanceTime(); // Advance to hour 10
 
-        Assert.AreEqual(1, applicationTracker.TotalFailedLvlOneInterviews + applicationTracker.TotalPassedLvlOneInterviews);
+        Assert.AreEqual(1, applicationTracker.TotalOngoingRecruiterScreenings());
     }
 }

@@ -24,8 +24,6 @@ public sealed class ApplicationTracker
         Failed
     }
 
-
-
     struct Application
     {
         public ApplicationType Type;
@@ -36,6 +34,29 @@ public sealed class ApplicationTracker
     {
         ongoingList.Add(new Application { Type = ApplicationType.ResumeSubmission, Status = ApplicationStatus.Ongoing });
         Changed?.Invoke();
+    }
+
+    private Application CreateOngoingInterview(int level)
+    {
+        switch (level)
+        {
+            case 1:
+                return new Application { Type = ApplicationType.RecruiterScreening, Status = ApplicationStatus.Ongoing};
+            case 2:
+                return new Application { Type = ApplicationType.LevelOne, Status = ApplicationStatus.Ongoing};
+            case 3:
+                return new Application { Type = ApplicationType.LevelTwo, Status = ApplicationStatus.Ongoing};
+            case 4:
+                return new Application { Type = ApplicationType.LevelThree, Status = ApplicationStatus.Ongoing};
+            default:
+                Debug.LogWarning($"Unknown interview level {level}. Using RecruiterScreening.");
+                return new Application { Type = ApplicationType.RecruiterScreening, Status = ApplicationStatus.Ongoing};
+        }
+    }
+
+    public void RecordInterviewEvent(int level) 
+    {
+        ongoingList.Add(CreateOngoingInterview(level));
     }
 
     public void Bind(InterviewTracker interviewTracker)
@@ -148,39 +169,39 @@ public sealed class ApplicationTracker
         return ApplicationsQuery(ApplicationType.RecruiterScreening, ApplicationStatus.Failed);
     }
 
-    public int TotalOngoingLvlOneInterviews () 
+    public int TotalOngoingLvlOneInterviews() 
     { 
         return ApplicationsQuery(ApplicationType.LevelOne, ApplicationStatus.Ongoing); 
     }
-    public int TotalPassedLvlOneInterviews () 
+    public int TotalPassedLvlOneInterviews() 
     { 
         return ApplicationsQuery(ApplicationType.LevelOne, ApplicationStatus.Passed); 
     }
-    public int TotalFailedLvlOneInterviews () 
+    public int TotalFailedLvlOneInterviews() 
     { 
         return ApplicationsQuery(ApplicationType.LevelOne, ApplicationStatus.Failed); 
     }
-    public int TotalOngoingLvlTwoInterviews () 
+    public int TotalOngoingLvlTwoInterviews() 
     { 
         return ApplicationsQuery(ApplicationType.LevelTwo, ApplicationStatus.Ongoing); 
     }
-    public int TotalPassedLvlTwoInterviews ()
+    public int TotalPassedLvlTwoInterviews()
     { 
         return ApplicationsQuery(ApplicationType.LevelTwo, ApplicationStatus.Passed); 
     }
-    public int TotalFailedLvlTwoInterviews ()
+    public int TotalFailedLvlTwoInterviews()
     { 
         return ApplicationsQuery(ApplicationType.LevelTwo, ApplicationStatus.Failed); 
     }
-    public int TotalOngoingLvlThreeInterviews ()
+    public int TotalOngoingLvlThreeInterviews()
     { 
         return ApplicationsQuery(ApplicationType.LevelThree, ApplicationStatus.Ongoing); 
     }
-    public int TotalPassedLvlThreeInterviews ()
+    public int TotalPassedLvlThreeInterviews()
     { 
         return ApplicationsQuery(ApplicationType.LevelThree, ApplicationStatus.Passed); 
     }
-    public int TotalFailedLvlThreeInterviews ()
+    public int TotalFailedLvlThreeInterviews()
     { 
         return ApplicationsQuery(ApplicationType.LevelThree, ApplicationStatus.Failed); 
     }

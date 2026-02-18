@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public sealed class TimeDateTracker
+public sealed class CurrentTimeDate
 {
     public int Hours { get; private set;}
     public int Days {get; private set;}
@@ -13,7 +13,7 @@ public sealed class TimeDateTracker
     public event Action Changed;
     public event Action EndOfDayReached;
 
-    public TimeDateTracker(int startHour = 8, int startDay = 0)
+    public CurrentTimeDate(int startHour = 8, int startDay = 0)
     {
         Hours = startHour;
         Days = startDay;

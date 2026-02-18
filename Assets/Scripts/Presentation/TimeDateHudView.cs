@@ -10,7 +10,7 @@ public class TimeDateHudView : MonoBehaviour
         textViews = GetComponentsInChildren<TimeTextViewBase>(true);
     }
 
-    public void Bind(TimeDateTracker tracker)
+    public void Bind(CurrentTimeDate tracker)
     {
         foreach (var view in textViews)
         {

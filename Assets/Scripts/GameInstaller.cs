@@ -20,7 +20,7 @@ public class GameInstaller : MonoBehaviour
     private IConfirmInterviewSystem confirmInterviewSystem;
     private InterviewSystem interviewSystem;
     private PlayerStatistics playerStats;
-    private TimeDateTracker timeDateTracker;
+    private CurrentTimeDate timeDateTracker;
     private InterviewTracker interviewTracker;
 
     void Awake()
@@ -30,7 +30,7 @@ public class GameInstaller : MonoBehaviour
 
         // Domain
         playerStats = new PlayerStatistics(cfg);
-        timeDateTracker = new TimeDateTracker();
+        timeDateTracker = new CurrentTimeDate();
         tracker = new ApplicationTracker();
         interviewTracker = new InterviewTracker();
         tracker.Bind(interviewTracker);

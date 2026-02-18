@@ -10,12 +10,12 @@ public interface IConfirmInterviewSystem
 
 public sealed class ConfirmInterviewSystem : IConfirmInterviewSystem
 {
-    private readonly TimeDateTracker timeDateTracker;
+    private readonly CurrentTimeDate timeDateTracker;
     private readonly InterviewTracker interviewTracker;
 
     public InterviewTracker InterviewTracker => interviewTracker;
 
-    public ConfirmInterviewSystem(TimeDateTracker timeDateTracker, InterviewTracker interviewTracker)
+    public ConfirmInterviewSystem(CurrentTimeDate timeDateTracker, InterviewTracker interviewTracker)
     {
         this.timeDateTracker = timeDateTracker;
         this.interviewTracker = interviewTracker;

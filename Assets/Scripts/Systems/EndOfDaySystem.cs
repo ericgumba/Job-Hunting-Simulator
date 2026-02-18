@@ -3,12 +3,12 @@ using UnityEngine;
 
 public sealed class EndOfDaySystem
 {
-    private readonly TimeDateTracker timeDateTracker;
+    private readonly CurrentTimeDate timeDateTracker;
     private readonly ApplicationTracker appTracker;
     private readonly PlayerStatistics playerStats;
 
     public EndOfDaySystem(
-        TimeDateTracker timeDateTracker,
+        CurrentTimeDate timeDateTracker,
         ApplicationTracker appTracker,
         PlayerStatistics playerStats)
     {

@@ -1,8 +1,8 @@
 public sealed class RestSystem
 {
-    private readonly TimeDateTracker timeDateTracker;
+    private readonly CurrentTimeDate timeDateTracker;
 
-    public RestSystem(TimeDateTracker timeDateTracker)
+    public RestSystem(CurrentTimeDate timeDateTracker)
     {
         this.timeDateTracker = timeDateTracker;
     }
