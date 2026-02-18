@@ -2,14 +2,14 @@ using UnityEngine;
 
 public sealed class InterviewSystem
 {
-    private readonly InterviewTracker interviewTracker;
+    private readonly ScheduledInterviews interviewTracker;
     private readonly ApplicationTracker applicationTracker;
     private readonly CurrentTimeDate timeDateTracker;
     private readonly PlayerStatistics playerStats;
-    public InterviewTracker InterviewTracker => interviewTracker;
+    public ScheduledInterviews ScheduledInterviews => interviewTracker;
 
     public InterviewSystem(
-        InterviewTracker interviewTracker,
+        ScheduledInterviews interviewTracker,
         ApplicationTracker applicationTracker,
         CurrentTimeDate timeDateTracker,
         PlayerStatistics playerStats)

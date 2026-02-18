@@ -3,7 +3,7 @@ using TMPro;
 
 public class UpcomingInterviewController : MonoBehaviour
 {
-    private InterviewTracker interviewTracker;
+    private ScheduledInterviews interviewTracker;
     protected TMP_Text upcomingInterviewText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Awake()
@@ -14,7 +14,7 @@ public class UpcomingInterviewController : MonoBehaviour
         Refresh();
     }
 
-    public void Bind(InterviewTracker tracker)
+    public void Bind(ScheduledInterviews tracker)
     {
         this.interviewTracker = tracker;
         tracker.Changed += Refresh;

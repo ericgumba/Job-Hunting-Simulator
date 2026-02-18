@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class InterviewTracker
+// 
+public sealed class ScheduledInterviews
 {
     public struct InterviewDate
     {
@@ -24,7 +25,7 @@ public sealed class InterviewTracker
 
     public event Action Changed;
 
-    public InterviewTracker()
+    public ScheduledInterviews()
     {
     }
 

@@ -11,11 +11,11 @@ public interface IConfirmInterviewSystem
 public sealed class ConfirmInterviewSystem : IConfirmInterviewSystem
 {
     private readonly CurrentTimeDate timeDateTracker;
-    private readonly InterviewTracker interviewTracker;
+    private readonly ScheduledInterviews interviewTracker;
 
-    public InterviewTracker InterviewTracker => interviewTracker;
+    public ScheduledInterviews ScheduledInterviews => interviewTracker;
 
-    public ConfirmInterviewSystem(CurrentTimeDate timeDateTracker, InterviewTracker interviewTracker)
+    public ConfirmInterviewSystem(CurrentTimeDate timeDateTracker, ScheduledInterviews interviewTracker)
     {
         this.timeDateTracker = timeDateTracker;
         this.interviewTracker = interviewTracker;
@@ -29,7 +29,7 @@ public sealed class ConfirmInterviewSystem : IConfirmInterviewSystem
     {
         var hour = int.Parse(timeLabel);
 
-        var interviewDate = new InterviewTracker.InterviewDate(
+        var interviewDate = new ScheduledInterviews.InterviewDate(
             timeDateTracker.Days + offsetDays,
             hour);
         return interviewTracker.TryAddInterviewDate(interviewDate);

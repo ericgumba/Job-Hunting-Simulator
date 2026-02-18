@@ -21,7 +21,7 @@ public class GameInstaller : MonoBehaviour
     private InterviewSystem interviewSystem;
     private PlayerStatistics playerStats;
     private CurrentTimeDate timeDateTracker;
-    private InterviewTracker interviewTracker;
+    private ScheduledInterviews interviewTracker;
 
     void Awake()
     {
@@ -32,7 +32,7 @@ public class GameInstaller : MonoBehaviour
         playerStats = new PlayerStatistics(cfg);
         timeDateTracker = new CurrentTimeDate();
         tracker = new ApplicationTracker();
-        interviewTracker = new InterviewTracker();
+        interviewTracker = new ScheduledInterviews();
         tracker.Bind(interviewTracker);
 
         // Systems

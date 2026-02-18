@@ -8,7 +8,7 @@ The main entry point of the program is in GameInstaller.cs
 
 It’s essentially a layered architecture with a light MV* flavor:
 
-Domain = state/data (TimeDateTracker, InterviewTracker)
+Domain = state/data (TimeDateTracker, ScheduledInterviews)
 Systems = application/business logic (ApplyForJobSystem, ConfirmInterviewSystem, InterviewSystem)
 Presentation = UI/controllers (PopupCalendarController, HUD views)
 

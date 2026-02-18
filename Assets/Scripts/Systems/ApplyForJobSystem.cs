@@ -2,16 +2,16 @@ public sealed class ApplyForJobSystem
 {
     private readonly ApplicationTracker tracker;
     private readonly PlayerStatistics playerStats;
-    private readonly CurrentTimeDate timeDateTracker;
+    private readonly CurrentTimeDate currentTime;
 
     public ApplyForJobSystem(
         ApplicationTracker tracker, 
         PlayerStatistics playerStats,
-        CurrentTimeDate timeDateTracker)
+        CurrentTimeDate currentTime)
     {
         this.tracker = tracker;
         this.playerStats = playerStats;
-        this.timeDateTracker = timeDateTracker;
+        this.currentTime = currentTime;
     }
 
     public string GetStats()

@@ -59,7 +59,7 @@ public sealed class ApplicationTracker
         ongoingList.Add(CreateOngoingInterview(level));
     }
 
-    public void Bind(InterviewTracker interviewTracker)
+    public void Bind(ScheduledInterviews interviewTracker)
     {
         interviewTracker.InterviewPopped += OnInterviewPopped;
     }

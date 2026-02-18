@@ -2,15 +2,15 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 
-public class InterviewTrackerTests
+public class ScheduledInterviewsTests
 {
     [Test]
     public void TryAddInterviewDateAcceptsAnyDay()
     {
-        var interviewTracker = new InterviewTracker();
+        var interviewTracker = new ScheduledInterviews();
 
-        var sameDay = new InterviewTracker.InterviewDate(day: 2, hour: 10);
-        var pastDay = new InterviewTracker.InterviewDate(day: 1, hour: 10);
+        var sameDay = new ScheduledInterviews.InterviewDate(day: 2, hour: 10);
+        var pastDay = new ScheduledInterviews.InterviewDate(day: 1, hour: 10);
 
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(sameDay));
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(pastDay));
@@ -19,9 +19,9 @@ public class InterviewTrackerTests
     [Test]
     public void TryAddInterviewDateAcceptsFutureDay()
     {
-        var interviewTracker = new InterviewTracker();
+        var interviewTracker = new ScheduledInterviews();
 
-        var futureDay = new InterviewTracker.InterviewDate(day: 1, hour: 9);
+        var futureDay = new ScheduledInterviews.InterviewDate(day: 1, hour: 9);
 
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(futureDay));
     }
@@ -29,12 +29,12 @@ public class InterviewTrackerTests
     [Test]
     public void InterviewPoppedFiresWhenTimeMatchesAndRemovesEntry()
     {
-        var interviewTracker = new InterviewTracker();
+        var interviewTracker = new ScheduledInterviews();
         int fired = 0;
         int lvl_result = 0;
 
         interviewTracker.InterviewPopped += (int level) => {fired++; lvl_result = level;};
-        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new InterviewTracker.InterviewDate(day: 1, hour: 9)));
+        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 9)));
 
         interviewTracker.NotifyTimeChanged(day: 1, hour: 8);
 
@@ -49,12 +49,12 @@ public class InterviewTrackerTests
     [Test]
     public void InterviewPoppedFiresForEachMatchingInterview()
     {
-        var interviewTracker = new InterviewTracker();
+        var interviewTracker = new ScheduledInterviews();
         int fired = 0;
 
         interviewTracker.InterviewPopped += (int _) => fired++;
-        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new InterviewTracker.InterviewDate(day: 1, hour: 8)));
-        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new InterviewTracker.InterviewDate(day: 1, hour: 8)));
+        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 8)));
+        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 8)));
 
         interviewTracker.NotifyTimeChanged(day: 1, hour: 8);
 
@@ -78,7 +78,7 @@ public class InterviewTrackerTests
     [Test]
     public void InterviewSystem_TryPerformInterview_RecordsInterviewEvent()
     {
-        var interviewTracker = new InterviewTracker();
+        var interviewTracker = new ScheduledInterviews();
         var applicationTracker = new ApplicationTracker();
         var timeDateTracker = new CurrentTimeDate(startHour: 9, startDay: 0);
         var playerStats = new PlayerStatistics();
@@ -89,7 +89,7 @@ public class InterviewTrackerTests
             timeDateTracker,
             playerStats);
 
-        var interviewDate = new InterviewTracker.InterviewDate(day: 0, hour: 10, lvl: 1);
+        var interviewDate = new ScheduledInterviews.InterviewDate(day: 0, hour: 10, lvl: 1);
         interviewTracker.TryAddInterviewDate(interviewDate);
 
         timeDateTracker.AdvanceTime(); // Advance to hour 10
