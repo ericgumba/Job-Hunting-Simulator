@@ -27,6 +27,63 @@ public class ScheduledInterviewsTests
     }
 
     [Test]
+    public void ResultsAreShownAtEndOfDay()
+    {
+        EndOfDaySystem endOfDaySystem = null;
+        var applicationTracker = new ApplicationTracker();
+        var currentTimeDate = new CurrentTimeDate(startHour: 22, startDay: 0);
+        var playerStats = new PlayerStatistics();
+        endOfDaySystem = new EndOfDaySystem(
+            currentTimeDate,
+            applicationTracker,
+            playerStats);
+        
+        applicationTracker.RecordResumeSubmission();
+        applicationTracker.RecordResumeSubmission();
+        applicationTracker.RecordResumeSubmission();
+        applicationTracker.RecordResumeSubmission();
+        applicationTracker.RecordResumeSubmission();
+        applicationTracker.RecordInterviewEvent(1);
+        applicationTracker.RecordInterviewEvent(1);
+        applicationTracker.RecordInterviewEvent(1);
+        applicationTracker.RecordInterviewEvent(1);
+        applicationTracker.RecordInterviewEvent(2);
+        applicationTracker.RecordInterviewEvent(2);
+        applicationTracker.RecordInterviewEvent(2);
+        applicationTracker.RecordInterviewEvent(3);
+        applicationTracker.RecordInterviewEvent(3);
+        applicationTracker.RecordInterviewEvent(4);
+
+        Assert.AreEqual(5, applicationTracker.TotalOngoingResumeSubmissions());
+        Assert.AreEqual(4, applicationTracker.TotalOngoingRecruiterScreenings());
+        Assert.AreEqual(3, applicationTracker.TotalOngoingLvlOneInterviews());
+        Assert.AreEqual(2, applicationTracker.TotalOngoingLvlTwoInterviews());
+        Assert.AreEqual(1, applicationTracker.TotalOngoingLvlThreeInterviews());
+
+        currentTimeDate.AdvanceTime(); // Advances to 23
+
+        Assert.AreEqual(5, applicationTracker.TotalOngoingResumeSubmissions());
+        Assert.AreEqual(4, applicationTracker.TotalOngoingRecruiterScreenings());
+        Assert.AreEqual(3, applicationTracker.TotalOngoingLvlOneInterviews());
+        Assert.AreEqual(2, applicationTracker.TotalOngoingLvlTwoInterviews());
+        Assert.AreEqual(1, applicationTracker.TotalOngoingLvlThreeInterviews());
+
+        currentTimeDate.AdvanceTime(); // Advances to 24 -> should trigger EndOfDayReached
+        Assert.AreEqual(0, applicationTracker.TotalOngoingResumeSubmissions());
+        Assert.AreEqual(0, applicationTracker.TotalOngoingRecruiterScreenings());
+        Assert.AreEqual(0, applicationTracker.TotalOngoingLvlOneInterviews());
+        Assert.AreEqual(0, applicationTracker.TotalOngoingLvlTwoInterviews());
+        Assert.AreEqual(0, applicationTracker.TotalOngoingLvlThreeInterviews());
+
+        Assert.AreEqual(5, applicationTracker.TotalPassedResumeSubmissions() + applicationTracker.TotalFailedResumeSubmissions());
+        Assert.AreEqual(4, applicationTracker.TotalPassedRecruiterScreenings() + applicationTracker.TotalFailedRecruiterScreenings());
+        Assert.AreEqual(3, applicationTracker.TotalPassedLvlOneInterviews() + applicationTracker.TotalFailedLvlOneInterviews());
+        Assert.AreEqual(2, applicationTracker.TotalPassedLvlTwoInterviews() + applicationTracker.TotalFailedLvlTwoInterviews());
+        Assert.AreEqual(1, applicationTracker.TotalPassedLvlThreeInterviews() + applicationTracker.TotalFailedLvlThreeInterviews());
+
+    }
+
+    [Test]
     public void InterviewPoppedFiresWhenTimeMatchesAndRemovesEntry()
     {
         var interviewTracker = new ScheduledInterviews();
@@ -64,14 +121,14 @@ public class ScheduledInterviewsTests
     [Test]
     public void EndOfDayReached()
     {
-        var timeDateTracker = new CurrentTimeDate(startHour: 22, startDay: 0);
+        var currentTimeDate = new CurrentTimeDate(startHour: 22, startDay: 0);
         int fired = 0;
-        timeDateTracker.EndOfDayReached += () => fired++;
+        currentTimeDate.EndOfDayReached += () => fired++;
 
-        timeDateTracker.AdvanceTime(); // Advances to 24 -> should trigger EndOfDayReached
+        currentTimeDate.AdvanceTime(); // Advances to 23 
         Assert.AreEqual(0, fired);
 
-        timeDateTracker.AdvanceTime(); // Advances to 24 -> should trigger EndOfDayReached
+        currentTimeDate.AdvanceTime(); // Advances to 24 -> should trigger EndOfDayReached
         Assert.AreEqual(1, fired);
     }
 
@@ -80,19 +137,19 @@ public class ScheduledInterviewsTests
     {
         var interviewTracker = new ScheduledInterviews();
         var applicationTracker = new ApplicationTracker();
-        var timeDateTracker = new CurrentTimeDate(startHour: 9, startDay: 0);
+        var currentTimeDate = new CurrentTimeDate(startHour: 9, startDay: 0);
         var playerStats = new PlayerStatistics();
 
         var interviewSystem = new InterviewSystem(
             interviewTracker,
             applicationTracker,
-            timeDateTracker,
+            currentTimeDate,
             playerStats);
 
         var interviewDate = new ScheduledInterviews.InterviewDate(day: 0, hour: 10, lvl: 1);
         interviewTracker.TryAddInterviewDate(interviewDate);
 
-        timeDateTracker.AdvanceTime(); // Advance to hour 10
+        currentTimeDate.AdvanceTime(); // Advance to hour 10
 
         Assert.AreEqual(1, applicationTracker.TotalOngoingRecruiterScreenings());
     }

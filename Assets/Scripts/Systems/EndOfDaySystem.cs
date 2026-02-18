@@ -3,19 +3,19 @@ using UnityEngine;
 
 public sealed class EndOfDaySystem
 {
-    private readonly CurrentTimeDate timeDateTracker;
+    private readonly CurrentTimeDate currentTimeDate;
     private readonly ApplicationTracker appTracker;
     private readonly PlayerStatistics playerStats;
 
     public EndOfDaySystem(
-        CurrentTimeDate timeDateTracker,
+        CurrentTimeDate currentTimeDate,
         ApplicationTracker appTracker,
         PlayerStatistics playerStats)
     {
-        this.timeDateTracker = timeDateTracker;
+        this.currentTimeDate = currentTimeDate;
         this.appTracker = appTracker;
         this.playerStats = playerStats;
-        this.timeDateTracker.EndOfDayReached += OnEndOfDayReached;
+        this.currentTimeDate.EndOfDayReached += OnEndOfDayReached;
     }
 
     private void OnEndOfDayReached()
