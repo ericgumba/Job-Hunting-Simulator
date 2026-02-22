@@ -14,6 +14,7 @@ public class ApplyButtonController : MonoBehaviour
     {
         button = GetComponent<Button>();
  
+        Debug.Log("applySystem.GetStats()");
         button.onClick.AddListener(OnClicked);
     }
 
@@ -24,8 +25,8 @@ public class ApplyButtonController : MonoBehaviour
 
     void OnClicked()
     {
-        applySystem.Apply();
         Debug.Log(applySystem.GetStats());
+        applySystem.Apply();
         // Later:
         // - show popup
         // - update HUD
