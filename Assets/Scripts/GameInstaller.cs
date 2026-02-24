@@ -22,6 +22,7 @@ public class GameInstaller : MonoBehaviour
     private PlayerStatistics playerStats;
     private CurrentTimeDate timeDateTracker;
     private ScheduledInterviews interviewTracker;
+    private EndOfDaySystem endOfDaySystem;
 
     void Awake()
     {
@@ -36,10 +37,11 @@ public class GameInstaller : MonoBehaviour
         tracker.Bind(interviewTracker);
 
         // Systems
-        applySystem = new ApplyForJobSystem(tracker, playerStats, timeDateTracker);
+        applySystem = new ApplyForJobSystem(tracker, timeDateTracker);
         restSystem = new RestSystem(timeDateTracker);
         confirmInterviewSystem = new ConfirmInterviewSystem(timeDateTracker, interviewTracker);
         interviewSystem = new InterviewSystem(interviewTracker, tracker, timeDateTracker, playerStats);
+        endOfDaySystem = new EndOfDaySystem(timeDateTracker, tracker, playerStats);
         // Bind UI to the same instances
 
         // Presentation

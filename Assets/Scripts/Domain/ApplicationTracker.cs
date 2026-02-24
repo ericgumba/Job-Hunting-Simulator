@@ -57,6 +57,7 @@ public sealed class ApplicationTracker
     public void RecordInterviewEvent(int level) 
     {
         ongoingList.Add(CreateOngoingInterview(level));
+        InterviewRecorded?.Invoke();
     }
 
     public void Bind(ScheduledInterviews interviewTracker)

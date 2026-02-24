@@ -1,5 +1,7 @@
 using UnityEngine;
 
+
+// This system manages the scheduling and execution of interviews based on the current time and player statistics.
 public sealed class InterviewSystem
 {
     private readonly ScheduledInterviews interviewTracker;

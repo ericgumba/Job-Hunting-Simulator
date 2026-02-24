@@ -5,6 +5,19 @@ using System.Collections.Generic;
 public class ScheduledInterviewsTests
 {
     [Test]
+    public void ApplyForJobSystem_Apply_RecordsResumeSubmissionAndAdvancesTime()
+    {
+        var applicationTracker = new ApplicationTracker();
+        var currentTime = new CurrentTimeDate(startHour: 9, startDay: 0);
+        var applySystem = new ApplyForJobSystem(applicationTracker, currentTime);
+
+        applySystem.Apply();
+
+        Assert.AreEqual(1, applicationTracker.TotalOngoingResumeSubmissions());
+        Assert.AreEqual(10, currentTime.Hours);
+    }
+
+    [Test]
     public void TryAddInterviewDateAcceptsAnyDay()
     {
         var interviewTracker = new ScheduledInterviews();
