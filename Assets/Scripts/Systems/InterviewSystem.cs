@@ -46,19 +46,6 @@ public sealed class InterviewSystem
         timeDateTracker.AdvanceTime(); // Advance time after interview 
     }
 
-    void Log_Results()
-    {
-        Debug.Log($"Total Interviews: {applicationTracker.TotalApplications()} " +
-                  $"Passed Lvl 1: {applicationTracker.TotalPassedRecruiterScreenings()} " +
-                  $"Failed Lvl 1: {applicationTracker.TotalFailedRecruiterScreenings()} " +
-                  $"Passed Lvl 2: {applicationTracker.TotalPassedLvlOneInterviews()} " +
-                  $"Failed Lvl 2: {applicationTracker.TotalFailedLvlOneInterviews()} " +
-                  $"Passed Lvl 3: {applicationTracker.TotalPassedLvlTwoInterviews()} " +
-                  $"Failed Lvl 3: {applicationTracker.TotalFailedLvlTwoInterviews()} " +
-                  $"Passed Lvl 4: {applicationTracker.TotalPassedLvlThreeInterviews()} " +
-                  $"Failed Lvl 4: {applicationTracker.TotalFailedLvlThreeInterviews()} ");
-    }
-
     private float GetInterviewChance(int level)
     {
         switch (level)

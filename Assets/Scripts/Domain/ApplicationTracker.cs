@@ -13,9 +13,9 @@ public sealed class ApplicationTracker
     {
         ResumeSubmission,
         RecruiterScreening,
-        LevelOne,
-        LevelTwo,
-        LevelThree
+        FirstTechnical,
+        SecondTechnical,
+        HiringManager
     }
     private enum ApplicationStatus
     {
@@ -36,6 +36,30 @@ public sealed class ApplicationTracker
         Changed?.Invoke();
     }
 
+    public void RecordRecruiterScreening()
+    {
+        ongoingList.Add(new Application { Type = ApplicationType.RecruiterScreening, Status = ApplicationStatus.Ongoing });
+        Changed?.Invoke();
+    }
+
+    public void RecordFirstTechnicalInterview()
+    {
+        ongoingList.Add(new Application { Type = ApplicationType.FirstTechnical, Status = ApplicationStatus.Ongoing });
+        Changed?.Invoke();
+    }
+
+    public void RecordSecondTechnicalInterview()
+    {
+        ongoingList.Add(new Application { Type = ApplicationType.SecondTechnical, Status = ApplicationStatus.Ongoing });
+        Changed?.Invoke();
+    }
+
+    public void RecordHiringManagerInterview()
+    {
+        ongoingList.Add(new Application { Type = ApplicationType.HiringManager, Status = ApplicationStatus.Ongoing });
+        Changed?.Invoke();
+    }
+
     private Application CreateOngoingInterview(int level)
     {
         switch (level)
@@ -43,11 +67,11 @@ public sealed class ApplicationTracker
             case 1:
                 return new Application { Type = ApplicationType.RecruiterScreening, Status = ApplicationStatus.Ongoing};
             case 2:
-                return new Application { Type = ApplicationType.LevelOne, Status = ApplicationStatus.Ongoing};
+                return new Application { Type = ApplicationType.FirstTechnical, Status = ApplicationStatus.Ongoing};
             case 3:
-                return new Application { Type = ApplicationType.LevelTwo, Status = ApplicationStatus.Ongoing};
+                return new Application { Type = ApplicationType.SecondTechnical, Status = ApplicationStatus.Ongoing};
             case 4:
-                return new Application { Type = ApplicationType.LevelThree, Status = ApplicationStatus.Ongoing};
+                return new Application { Type = ApplicationType.HiringManager, Status = ApplicationStatus.Ongoing};
             default:
                 Debug.LogWarning($"Unknown interview level {level}. Using RecruiterScreening.");
                 return new Application { Type = ApplicationType.RecruiterScreening, Status = ApplicationStatus.Ongoing};
@@ -56,6 +80,13 @@ public sealed class ApplicationTracker
 
     public void RecordInterviewEvent(int level) 
     {
+        Debug.Log($"ERICGUMBA Recording interview event for level {level}");
+        ongoingList.Add(CreateOngoingInterview(level));
+        InterviewRecorded?.Invoke();
+    }
+    public void ScheduleInterviewEvent(int level) 
+    {
+        Debug.Log($"ERICGUMBA Scheduling interview event for level {level}");
         ongoingList.Add(CreateOngoingInterview(level));
         InterviewRecorded?.Invoke();
     }
@@ -110,6 +141,29 @@ public sealed class ApplicationTracker
         ongoingList[lastApplicationIndexProcessed] = app;
 
         lastApplicationIndexProcessed++;
+        if (app.Status == ApplicationStatus.Passed)
+        {
+            if (app.Type == ApplicationType.ResumeSubmission)
+            {
+                Debug.Log("Resume submission passed. Scheduling recruiter screening.");
+                RecordInterviewEvent(1); // Schedule recruiter screening
+            }
+            else if (app.Type == ApplicationType.RecruiterScreening)
+            {
+                Debug.Log("Recruiter screening passed. Scheduling level 1 interview.");
+                RecordInterviewEvent(2); // Schedule first technical interview
+            }
+            else if (app.Type == ApplicationType.FirstTechnical)
+            {
+                Debug.Log("First technical interview passed. Scheduling second technical interview.");
+                RecordInterviewEvent(3); // Schedule second technical interview
+            }
+            else if (app.Type == ApplicationType.SecondTechnical)
+            {
+                Debug.Log("Second technical interview passed. Scheduling hiring manager interview.");
+                RecordInterviewEvent(4); // Schedule hiring manager interview
+            }
+        }
         Changed?.Invoke();
     }
 
@@ -117,9 +171,9 @@ public sealed class ApplicationTracker
     {
         ApplicationType appType = lvl switch
         {
-            1 => ApplicationType.LevelOne,
-            2 => ApplicationType.LevelTwo,
-            3 => ApplicationType.LevelThree,
+            1 => ApplicationType.FirstTechnical,
+            2 => ApplicationType.SecondTechnical,
+            3 => ApplicationType.HiringManager,
             _ => throw new ArgumentOutOfRangeException(nameof(lvl), "Invalid interview level")
         };
 
@@ -170,41 +224,41 @@ public sealed class ApplicationTracker
         return ApplicationsQuery(ApplicationType.RecruiterScreening, ApplicationStatus.Failed);
     }
 
-    public int TotalOngoingLvlOneInterviews() 
+    public int TotalOngoingFirstTechnicalInterviews() 
     { 
-        return ApplicationsQuery(ApplicationType.LevelOne, ApplicationStatus.Ongoing); 
+        return ApplicationsQuery(ApplicationType.FirstTechnical, ApplicationStatus.Ongoing); 
     }
-    public int TotalPassedLvlOneInterviews() 
+    public int TotalPassedFirstTechnicalInterviews() 
     { 
-        return ApplicationsQuery(ApplicationType.LevelOne, ApplicationStatus.Passed); 
+        return ApplicationsQuery(ApplicationType.FirstTechnical, ApplicationStatus.Passed); 
     }
-    public int TotalFailedLvlOneInterviews() 
+    public int TotalFailedFirstTechnicalInterviews() 
     { 
-        return ApplicationsQuery(ApplicationType.LevelOne, ApplicationStatus.Failed); 
+        return ApplicationsQuery(ApplicationType.FirstTechnical, ApplicationStatus.Failed); 
     }
-    public int TotalOngoingLvlTwoInterviews() 
+    public int TotalOngoingSecondTechnicalInterviews() 
     { 
-        return ApplicationsQuery(ApplicationType.LevelTwo, ApplicationStatus.Ongoing); 
+        return ApplicationsQuery(ApplicationType.SecondTechnical, ApplicationStatus.Ongoing); 
     }
-    public int TotalPassedLvlTwoInterviews()
+    public int TotalPassedSecondTechnicalInterviews()
     { 
-        return ApplicationsQuery(ApplicationType.LevelTwo, ApplicationStatus.Passed); 
+        return ApplicationsQuery(ApplicationType.SecondTechnical, ApplicationStatus.Passed); 
     }
-    public int TotalFailedLvlTwoInterviews()
+    public int TotalFailedSecondTechnicalInterviews()
     { 
-        return ApplicationsQuery(ApplicationType.LevelTwo, ApplicationStatus.Failed); 
+        return ApplicationsQuery(ApplicationType.SecondTechnical, ApplicationStatus.Failed); 
     }
-    public int TotalOngoingLvlThreeInterviews()
+    public int TotalOngoingHiringManagerInterviews()
     { 
-        return ApplicationsQuery(ApplicationType.LevelThree, ApplicationStatus.Ongoing); 
+        return ApplicationsQuery(ApplicationType.HiringManager, ApplicationStatus.Ongoing); 
     }
-    public int TotalPassedLvlThreeInterviews()
+    public int TotalPassedHiringManagerInterviews()
     { 
-        return ApplicationsQuery(ApplicationType.LevelThree, ApplicationStatus.Passed); 
+        return ApplicationsQuery(ApplicationType.HiringManager, ApplicationStatus.Passed); 
     }
-    public int TotalFailedLvlThreeInterviews()
+    public int TotalFailedHiringManagerInterviews()
     { 
-        return ApplicationsQuery(ApplicationType.LevelThree, ApplicationStatus.Failed); 
+        return ApplicationsQuery(ApplicationType.HiringManager, ApplicationStatus.Failed); 
     }
 
 }

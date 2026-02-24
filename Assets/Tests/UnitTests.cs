@@ -69,30 +69,30 @@ public class ScheduledInterviewsTests
 
         Assert.AreEqual(5, applicationTracker.TotalOngoingResumeSubmissions());
         Assert.AreEqual(4, applicationTracker.TotalOngoingRecruiterScreenings());
-        Assert.AreEqual(3, applicationTracker.TotalOngoingLvlOneInterviews());
-        Assert.AreEqual(2, applicationTracker.TotalOngoingLvlTwoInterviews());
-        Assert.AreEqual(1, applicationTracker.TotalOngoingLvlThreeInterviews());
+        Assert.AreEqual(3, applicationTracker.TotalOngoingFirstTechnicalInterviews());
+        Assert.AreEqual(2, applicationTracker.TotalOngoingSecondTechnicalInterviews());
+        Assert.AreEqual(1, applicationTracker.TotalOngoingHiringManagerInterviews());
 
         currentTimeDate.AdvanceTime(); // Advances to 23
 
         Assert.AreEqual(5, applicationTracker.TotalOngoingResumeSubmissions());
         Assert.AreEqual(4, applicationTracker.TotalOngoingRecruiterScreenings());
-        Assert.AreEqual(3, applicationTracker.TotalOngoingLvlOneInterviews());
-        Assert.AreEqual(2, applicationTracker.TotalOngoingLvlTwoInterviews());
-        Assert.AreEqual(1, applicationTracker.TotalOngoingLvlThreeInterviews());
+        Assert.AreEqual(3, applicationTracker.TotalOngoingFirstTechnicalInterviews());
+        Assert.AreEqual(2, applicationTracker.TotalOngoingSecondTechnicalInterviews());
+        Assert.AreEqual(1, applicationTracker.TotalOngoingHiringManagerInterviews());
 
         currentTimeDate.AdvanceTime(); // Advances to 24 -> should trigger EndOfDayReached
         Assert.AreEqual(0, applicationTracker.TotalOngoingResumeSubmissions());
         Assert.AreEqual(0, applicationTracker.TotalOngoingRecruiterScreenings());
-        Assert.AreEqual(0, applicationTracker.TotalOngoingLvlOneInterviews());
-        Assert.AreEqual(0, applicationTracker.TotalOngoingLvlTwoInterviews());
-        Assert.AreEqual(0, applicationTracker.TotalOngoingLvlThreeInterviews());
+        Assert.AreEqual(0, applicationTracker.TotalOngoingFirstTechnicalInterviews());
+        Assert.AreEqual(0, applicationTracker.TotalOngoingSecondTechnicalInterviews());
+        Assert.AreEqual(0, applicationTracker.TotalOngoingHiringManagerInterviews());
 
         Assert.AreEqual(5, applicationTracker.TotalPassedResumeSubmissions() + applicationTracker.TotalFailedResumeSubmissions());
         Assert.AreEqual(4, applicationTracker.TotalPassedRecruiterScreenings() + applicationTracker.TotalFailedRecruiterScreenings());
-        Assert.AreEqual(3, applicationTracker.TotalPassedLvlOneInterviews() + applicationTracker.TotalFailedLvlOneInterviews());
-        Assert.AreEqual(2, applicationTracker.TotalPassedLvlTwoInterviews() + applicationTracker.TotalFailedLvlTwoInterviews());
-        Assert.AreEqual(1, applicationTracker.TotalPassedLvlThreeInterviews() + applicationTracker.TotalFailedLvlThreeInterviews());
+        Assert.AreEqual(3, applicationTracker.TotalPassedFirstTechnicalInterviews() + applicationTracker.TotalFailedFirstTechnicalInterviews());
+        Assert.AreEqual(2, applicationTracker.TotalPassedSecondTechnicalInterviews() + applicationTracker.TotalFailedSecondTechnicalInterviews());
+        Assert.AreEqual(1, applicationTracker.TotalPassedHiringManagerInterviews() + applicationTracker.TotalFailedHiringManagerInterviews());
 
     }
 

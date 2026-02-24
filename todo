@@ -21,6 +21,8 @@ We need an event scroll
 
 todo:
 
+refactor ApplicationTracker, move complexity to Systems that rely on it
+
 Generate text on the event scroll at the end of each day
 
 Interviews are no longer triggered anymore.

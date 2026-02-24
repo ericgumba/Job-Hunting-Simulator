@@ -41,11 +41,11 @@ public sealed class EndOfDaySystem
                 return playerStats.ResumeSubmission;
             case ApplicationTracker.ApplicationType.RecruiterScreening:
                 return playerStats.RecruiterScreening;
-            case ApplicationTracker.ApplicationType.LevelOne:
+            case ApplicationTracker.ApplicationType.FirstTechnical:
                 return playerStats.LevelOne;
-            case ApplicationTracker.ApplicationType.LevelTwo:
+            case ApplicationTracker.ApplicationType.SecondTechnical:
                 return playerStats.LevelTwo;
-            case ApplicationTracker.ApplicationType.LevelThree:
+            case ApplicationTracker.ApplicationType.HiringManager:
                 return playerStats.LevelThree;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Invalid application type");
