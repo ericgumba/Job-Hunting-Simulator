@@ -9,14 +9,6 @@ public sealed class ApplicationTracker
     private readonly List<Application> ongoingList = new List<Application>();
     private int lastApplicationIndexProcessed = 0;
 
-    public enum ApplicationType
-    {
-        ResumeSubmission,
-        RecruiterScreening,
-        FirstTechnical,
-        SecondTechnical,
-        HiringManager
-    }
     private enum ApplicationStatus
     {
         Ongoing,
@@ -96,11 +88,6 @@ public sealed class ApplicationTracker
         interviewTracker.InterviewPopped += OnInterviewPopped;
     }
 
-    public bool DoneProcessingAllOngoingApplications()
-    {
-        return lastApplicationIndexProcessed >= ongoingList.Count;
-    }
-
     public bool TryGetNextOngoingApplicationType(out ApplicationType type)
     {
         if (lastApplicationIndexProcessed >= ongoingList.Count)
@@ -122,7 +109,7 @@ public sealed class ApplicationTracker
         return true;
     }
 
-    public void ApplyNextOngoingResult(bool passed)
+    public void PassFailApplication(bool passed)
     {
         if (lastApplicationIndexProcessed >= ongoingList.Count)
         {
@@ -140,44 +127,14 @@ public sealed class ApplicationTracker
         app.Status = passed ? ApplicationStatus.Passed : ApplicationStatus.Failed;
         ongoingList[lastApplicationIndexProcessed] = app;
 
-        lastApplicationIndexProcessed++;
-        if (app.Status == ApplicationStatus.Passed)
-        {
-            if (app.Type == ApplicationType.ResumeSubmission)
-            {
-                Debug.Log("Resume submission passed. Scheduling recruiter screening.");
-                RecordInterviewEvent(1); // Schedule recruiter screening
-            }
-            else if (app.Type == ApplicationType.RecruiterScreening)
-            {
-                Debug.Log("Recruiter screening passed. Scheduling level 1 interview.");
-                RecordInterviewEvent(2); // Schedule first technical interview
-            }
-            else if (app.Type == ApplicationType.FirstTechnical)
-            {
-                Debug.Log("First technical interview passed. Scheduling second technical interview.");
-                RecordInterviewEvent(3); // Schedule second technical interview
-            }
-            else if (app.Type == ApplicationType.SecondTechnical)
-            {
-                Debug.Log("Second technical interview passed. Scheduling hiring manager interview.");
-                RecordInterviewEvent(4); // Schedule hiring manager interview
-            }
-        }
+        lastApplicationIndexProcessed++; 
         Changed?.Invoke();
     }
 
-    private void OnInterviewPopped(int lvl)
+    private void OnInterviewPopped(ApplicationType type)
     {
-        ApplicationType appType = lvl switch
-        {
-            1 => ApplicationType.FirstTechnical,
-            2 => ApplicationType.SecondTechnical,
-            3 => ApplicationType.HiringManager,
-            _ => throw new ArgumentOutOfRangeException(nameof(lvl), "Invalid interview level")
-        };
-
-        ongoingList.Add(new Application { Type = appType, Status = ApplicationStatus.Ongoing });
+        Debug.Log($"Interview popped for type {type}"); 
+        ongoingList.Add(new Application { Type = type, Status = ApplicationStatus.Ongoing });
         Changed?.Invoke();
     }
 

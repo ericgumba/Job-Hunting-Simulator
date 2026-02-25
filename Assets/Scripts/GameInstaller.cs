@@ -42,14 +42,13 @@ public class GameInstaller : MonoBehaviour
         confirmInterviewSystem = new ConfirmInterviewSystem(timeDateTracker, interviewTracker);
         interviewSystem = new InterviewSystem(interviewTracker, tracker, timeDateTracker, playerStats);
         endOfDaySystem = new EndOfDaySystem(timeDateTracker, tracker, playerStats);
-        // Bind UI to the same instances
 
         // Presentation
         applyButtonController.Bind(applySystem);
         restController.Bind(restSystem);
         applicationsHudView.Bind(tracker);
         timeDateHudView.Bind(timeDateTracker);
-        popupCalendarController.Bind(tracker);
+        popupCalendarController.Bind(endOfDaySystem);
         popupCalendarController.Bind(confirmInterviewSystem);
         upcomingInterviewController.Bind(interviewTracker);
 

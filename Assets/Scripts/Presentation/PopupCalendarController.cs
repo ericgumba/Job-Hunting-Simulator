@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class PopupCalendarController : MonoBehaviour
 {
 
-    private ApplicationTracker tracker;
+    private EndOfDaySystem endOfDaySystem;
     private IConfirmInterviewSystem confirmInterviewSystem;
     [SerializeField] private Button incrementButton;
     [SerializeField] private Button decrementButton;
@@ -40,10 +40,12 @@ public class PopupCalendarController : MonoBehaviour
         UpdateDayText();
     }
 
-    public void Bind(ApplicationTracker tracker)
+    public void Bind(EndOfDaySystem endOfDaySystem)
     {
-        this.tracker = tracker;
-        tracker.InterviewRecorded += Show;
+        this.endOfDaySystem = endOfDaySystem;
+        endOfDaySystem.notifyPopupCalendar += Show;
+            // No-op
+        // No-op
     }
 
     public void Bind(IConfirmInterviewSystem confirmInterviewSystem)
@@ -52,7 +54,7 @@ public class PopupCalendarController : MonoBehaviour
         // No-op
     }
 
-    private void Show()
+    private void Show(ApplicationType type)
     {
         Debug.Log("Showing popup calendar");
         gameObject.SetActive(true);
@@ -79,7 +81,7 @@ public class PopupCalendarController : MonoBehaviour
     private void OnTimeButtonClicked(Button button)
     {
         Debug.Log($"Clicked time button: {button.name}");
-        if (confirmInterviewSystem != null && tracker != null)
+        if (confirmInterviewSystem != null && endOfDaySystem != null)
         {
             Debug.Log($"Attempting to confirm interview... {dayOffset}");
             bool confirmed = confirmInterviewSystem.ConfirmInterview(button.name, dayOffset);
@@ -119,8 +121,8 @@ public class PopupCalendarController : MonoBehaviour
 
     void OnDestroy()
     {
-        if (tracker != null)
-            tracker.InterviewRecorded -= Show;
+        if (endOfDaySystem != null)
+            endOfDaySystem.notifyPopupCalendar -= Show;
     }
 
     private void UpdateDayText()

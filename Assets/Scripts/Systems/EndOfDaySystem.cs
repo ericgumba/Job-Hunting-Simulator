@@ -7,6 +7,8 @@ public sealed class EndOfDaySystem
     private readonly ApplicationTracker appTracker;
     private readonly PlayerStatistics playerStats;
 
+    public event Action<ApplicationType> notifyPopupCalendar;
+
     public EndOfDaySystem(
         CurrentTimeDate currentTimeDate,
         ApplicationTracker appTracker,
@@ -24,28 +26,37 @@ public sealed class EndOfDaySystem
         ProcessOngoingApplications();
     }
 
+    private void NotifyPopupCalendar(ApplicationType type)
+    {
+        notifyPopupCalendar?.Invoke(type);
+    }
+
     private void ProcessOngoingApplications()
     {
         while (appTracker.TryGetNextOngoingApplicationType(out var type))
         {
             var passed = UnityEngine.Random.value < GetPassChance(type);
-            appTracker.ApplyNextOngoingResult(passed);
+            appTracker.PassFailApplication(passed);
+            if (passed)
+            {
+                NotifyPopupCalendar(type);
+            }
         }
     }
 
-    private float GetPassChance(ApplicationTracker.ApplicationType type)
+    private float GetPassChance(ApplicationType type)
     {
         switch (type)
         {
-            case ApplicationTracker.ApplicationType.ResumeSubmission:
+            case ApplicationType.ResumeSubmission:
                 return playerStats.ResumeSubmission;
-            case ApplicationTracker.ApplicationType.RecruiterScreening:
+            case ApplicationType.RecruiterScreening:
                 return playerStats.RecruiterScreening;
-            case ApplicationTracker.ApplicationType.FirstTechnical:
+            case ApplicationType.FirstTechnical:
                 return playerStats.LevelOne;
-            case ApplicationTracker.ApplicationType.SecondTechnical:
+            case ApplicationType.SecondTechnical:
                 return playerStats.LevelTwo;
-            case ApplicationTracker.ApplicationType.HiringManager:
+            case ApplicationType.HiringManager:
                 return playerStats.LevelThree;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Invalid application type");

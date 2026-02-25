@@ -9,19 +9,19 @@ public sealed class ScheduledInterviews
     {
         public int Day;
         public int Hour;
-        public int Lvl;
+        public ApplicationType Type;
 
-        public InterviewDate(int day, int hour, int lvl = 1)
+        public InterviewDate(int day, int hour, ApplicationType type)
         {
             Day = day;
             Hour = hour;
-            Lvl = lvl;
+            Type = type;
         }
     }
 
     private readonly List<InterviewDate> _interviewDates = new List<InterviewDate>();
 
-    public event Action<int> InterviewPopped;
+    public event Action<ApplicationType> InterviewPopped;
 
     public event Action Changed;
 
@@ -80,7 +80,7 @@ public sealed class ScheduledInterviews
                 interviewDate.Hour == hour)
             {
                 _interviewDates.RemoveAt(i);
-                InterviewPopped?.Invoke(interviewDate.Lvl);
+                InterviewPopped?.Invoke(interviewDate.Type);
                 Changed?.Invoke();
                 sortInterviewDates();
             }

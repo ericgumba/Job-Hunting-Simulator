@@ -3,7 +3,7 @@ using System;
 // Interface
 public interface IConfirmInterviewSystem
 {
-    bool ConfirmInterview(string timeLabel, int offsetDays);
+    bool ConfirmInterview(string timeLabel, int offsetDays, ApplicationType type);
     int CurrentDate();
     bool ContainsInterviewAt(int day, int hour);
 }
@@ -25,13 +25,15 @@ public sealed class ConfirmInterviewSystem : IConfirmInterviewSystem
         return timeDateTracker.Days;
     }
 
-    public bool ConfirmInterview(string timeLabel, int offsetDays)
+    public bool ConfirmInterview(string timeLabel, int offsetDays, ApplicationType type)
     {
         var hour = int.Parse(timeLabel);
+        
 
         var interviewDate = new ScheduledInterviews.InterviewDate(
             timeDateTracker.Days + offsetDays,
-            hour);
+            hour,
+            type);
         return interviewTracker.TryAddInterviewDate(interviewDate);
     }
 
