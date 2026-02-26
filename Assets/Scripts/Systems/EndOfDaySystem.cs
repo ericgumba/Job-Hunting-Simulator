@@ -26,11 +26,6 @@ public sealed class EndOfDaySystem
         ProcessOngoingApplications();
     }
 
-    private void NotifyPopupCalendar(ApplicationType type)
-    {
-        notifyPopupCalendar?.Invoke(type);
-    }
-
     private void ProcessOngoingApplications()
     {
         while (appTracker.TryGetNextOngoingApplicationType(out var type))
@@ -39,7 +34,7 @@ public sealed class EndOfDaySystem
             appTracker.PassFailApplication(passed);
             if (passed)
             {
-                NotifyPopupCalendar(type);
+                notifyPopupCalendar?.Invoke(type);
             }
         }
     }

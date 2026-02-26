@@ -25,15 +25,31 @@ public sealed class ConfirmInterviewSystem : IConfirmInterviewSystem
         return timeDateTracker.Days;
     }
 
+    private ApplicationType next_type(ApplicationType type) {
+        switch (type) {
+            case ApplicationType.ResumeSubmission:
+                return ApplicationType.RecruiterScreening;
+            case ApplicationType.RecruiterScreening:
+                return ApplicationType.FirstTechnical;
+            case ApplicationType.FirstTechnical:
+                return ApplicationType.SecondTechnical;
+            case ApplicationType.SecondTechnical:
+                return ApplicationType.HiringManager;
+            default:
+                return type;
+        }
+    }
+
     public bool ConfirmInterview(string timeLabel, int offsetDays, ApplicationType type)
     {
         var hour = int.Parse(timeLabel);
-        
+
+        ApplicationType upgradedType = next_type(type);
 
         var interviewDate = new ScheduledInterviews.InterviewDate(
             timeDateTracker.Days + offsetDays,
             hour,
-            type);
+            upgradedType);
         return interviewTracker.TryAddInterviewDate(interviewDate);
     }
 

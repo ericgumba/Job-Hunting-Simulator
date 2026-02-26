@@ -41,7 +41,7 @@ public sealed class InterviewSystem
             return;
         }
 
-        applicationTracker.RecordInterviewEvent(interviewDate.Lvl);
+        applicationTracker.RecordInterviewEvent(interviewDate.Type);
         interviewTracker.NotifyTimeChanged(timeDateTracker.Days, timeDateTracker.Hours);
         timeDateTracker.AdvanceTime(); // Advance time after interview 
     }

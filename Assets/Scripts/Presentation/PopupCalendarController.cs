@@ -6,6 +6,7 @@ public class PopupCalendarController : MonoBehaviour
 
     private EndOfDaySystem endOfDaySystem;
     private IConfirmInterviewSystem confirmInterviewSystem;
+    private ApplicationType currentApplicationType;
     [SerializeField] private Button incrementButton;
     [SerializeField] private Button decrementButton;
     [SerializeField] private Button[] timeButtons;
@@ -43,9 +44,7 @@ public class PopupCalendarController : MonoBehaviour
     public void Bind(EndOfDaySystem endOfDaySystem)
     {
         this.endOfDaySystem = endOfDaySystem;
-        endOfDaySystem.notifyPopupCalendar += Show;
-            // No-op
-        // No-op
+        endOfDaySystem.notifyPopupCalendar += Show; 
     }
 
     public void Bind(IConfirmInterviewSystem confirmInterviewSystem)
@@ -57,6 +56,7 @@ public class PopupCalendarController : MonoBehaviour
     private void Show(ApplicationType type)
     {
         Debug.Log("Showing popup calendar");
+        currentApplicationType = type;
         gameObject.SetActive(true);
         UpdateDayText();
         UpdateButtonStates();
@@ -84,7 +84,7 @@ public class PopupCalendarController : MonoBehaviour
         if (confirmInterviewSystem != null && endOfDaySystem != null)
         {
             Debug.Log($"Attempting to confirm interview... {dayOffset}");
-            bool confirmed = confirmInterviewSystem.ConfirmInterview(button.name, dayOffset);
+            bool confirmed = confirmInterviewSystem.ConfirmInterview(button.name, dayOffset, currentApplicationType);
             if (confirmed)
             {
                 Debug.Log("Interview confirmed!");

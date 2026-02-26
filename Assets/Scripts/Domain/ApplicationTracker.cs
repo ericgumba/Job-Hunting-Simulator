@@ -27,61 +27,13 @@ public sealed class ApplicationTracker
         ongoingList.Add(new Application { Type = ApplicationType.ResumeSubmission, Status = ApplicationStatus.Ongoing });
         Changed?.Invoke();
     }
-
-    public void RecordRecruiterScreening()
+  
+    public void RecordInterviewEvent(ApplicationType type) 
     {
-        ongoingList.Add(new Application { Type = ApplicationType.RecruiterScreening, Status = ApplicationStatus.Ongoing });
-        Changed?.Invoke();
-    }
-
-    public void RecordFirstTechnicalInterview()
-    {
-        ongoingList.Add(new Application { Type = ApplicationType.FirstTechnical, Status = ApplicationStatus.Ongoing });
-        Changed?.Invoke();
-    }
-
-    public void RecordSecondTechnicalInterview()
-    {
-        ongoingList.Add(new Application { Type = ApplicationType.SecondTechnical, Status = ApplicationStatus.Ongoing });
-        Changed?.Invoke();
-    }
-
-    public void RecordHiringManagerInterview()
-    {
-        ongoingList.Add(new Application { Type = ApplicationType.HiringManager, Status = ApplicationStatus.Ongoing });
-        Changed?.Invoke();
-    }
-
-    private Application CreateOngoingInterview(int level)
-    {
-        switch (level)
-        {
-            case 1:
-                return new Application { Type = ApplicationType.RecruiterScreening, Status = ApplicationStatus.Ongoing};
-            case 2:
-                return new Application { Type = ApplicationType.FirstTechnical, Status = ApplicationStatus.Ongoing};
-            case 3:
-                return new Application { Type = ApplicationType.SecondTechnical, Status = ApplicationStatus.Ongoing};
-            case 4:
-                return new Application { Type = ApplicationType.HiringManager, Status = ApplicationStatus.Ongoing};
-            default:
-                Debug.LogWarning($"Unknown interview level {level}. Using RecruiterScreening.");
-                return new Application { Type = ApplicationType.RecruiterScreening, Status = ApplicationStatus.Ongoing};
-        }
-    }
-
-    public void RecordInterviewEvent(int level) 
-    {
-        Debug.Log($"ERICGUMBA Recording interview event for level {level}");
-        ongoingList.Add(CreateOngoingInterview(level));
+        Debug.Log($"ERICGUMBA Recording interview event for type {type}");
+        ongoingList.Add(new Application { Type = type, Status = ApplicationStatus.Ongoing });
         InterviewRecorded?.Invoke();
-    }
-    public void ScheduleInterviewEvent(int level) 
-    {
-        Debug.Log($"ERICGUMBA Scheduling interview event for level {level}");
-        ongoingList.Add(CreateOngoingInterview(level));
-        InterviewRecorded?.Invoke();
-    }
+    } 
 
     public void Bind(ScheduledInterviews interviewTracker)
     {

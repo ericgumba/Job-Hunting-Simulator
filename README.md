@@ -1,2 +1,2 @@
-# JHS
+# Job Hunting Simulator
 ...
