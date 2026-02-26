@@ -19,9 +19,13 @@ Switch to calculating application results at end of day
 
 We need an event scroll
 
-todo:
-
 refactor ApplicationTracker, move complexity to Systems that rely on it
+
+Delete RejectionsTextView.cs, InterviewTextView.cs and OngoingTextView.cs and just have ResumeSubmissionsTextView.cs, have that display ongoing, pass, fail etc... 
+
+All textViews should display ongoing, passed, and failed.
+
+todo:
 
 Generate text on the event scroll at the end of each day
 
