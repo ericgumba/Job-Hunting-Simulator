@@ -22,8 +22,8 @@ public class ScheduledInterviewsTests
     {
         var interviewTracker = new ScheduledInterviews();
 
-        var sameDay = new ScheduledInterviews.InterviewDate(day: 2, hour: 10);
-        var pastDay = new ScheduledInterviews.InterviewDate(day: 1, hour: 10);
+        var sameDay = new ScheduledInterviews.InterviewDate(day: 2, hour: 10, type: ApplicationType.RecruiterScreening);
+        var pastDay = new ScheduledInterviews.InterviewDate(day: 1, hour: 10, type: ApplicationType.RecruiterScreening);
 
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(sameDay));
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(pastDay));
@@ -34,7 +34,7 @@ public class ScheduledInterviewsTests
     {
         var interviewTracker = new ScheduledInterviews();
 
-        var futureDay = new ScheduledInterviews.InterviewDate(day: 1, hour: 9);
+        var futureDay = new ScheduledInterviews.InterviewDate(day: 1, hour: 9, type: ApplicationType.RecruiterScreening);
 
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(futureDay));
     }
@@ -56,17 +56,16 @@ public class ScheduledInterviewsTests
         applicationTracker.RecordResumeSubmission();
         applicationTracker.RecordResumeSubmission();
         applicationTracker.RecordResumeSubmission();
-        applicationTracker.RecordInterviewEvent(1);
-        applicationTracker.RecordInterviewEvent(1);
-        applicationTracker.RecordInterviewEvent(1);
-        applicationTracker.RecordInterviewEvent(1);
-        applicationTracker.RecordInterviewEvent(2);
-        applicationTracker.RecordInterviewEvent(2);
-        applicationTracker.RecordInterviewEvent(2);
-        applicationTracker.RecordInterviewEvent(3);
-        applicationTracker.RecordInterviewEvent(3);
-        applicationTracker.RecordInterviewEvent(4);
-
+        applicationTracker.RecordInterviewEvent(ApplicationType.RecruiterScreening);
+        applicationTracker.RecordInterviewEvent(ApplicationType.RecruiterScreening);
+        applicationTracker.RecordInterviewEvent(ApplicationType.RecruiterScreening);
+        applicationTracker.RecordInterviewEvent(ApplicationType.RecruiterScreening);
+        applicationTracker.RecordInterviewEvent(ApplicationType.FirstTechnical);
+        applicationTracker.RecordInterviewEvent(ApplicationType.FirstTechnical);
+        applicationTracker.RecordInterviewEvent(ApplicationType.FirstTechnical);
+        applicationTracker.RecordInterviewEvent(ApplicationType.SecondTechnical);
+        applicationTracker.RecordInterviewEvent(ApplicationType.SecondTechnical);
+        applicationTracker.RecordInterviewEvent(ApplicationType.HiringManager);
         Assert.AreEqual(5, applicationTracker.TotalOngoingResumeSubmissions());
         Assert.AreEqual(4, applicationTracker.TotalOngoingRecruiterScreenings());
         Assert.AreEqual(3, applicationTracker.TotalOngoingFirstTechnicalInterviews());
@@ -101,10 +100,10 @@ public class ScheduledInterviewsTests
     {
         var interviewTracker = new ScheduledInterviews();
         int fired = 0;
-        int lvl_result = 0;
+        ApplicationType type_result = ApplicationType.ResumeSubmission;
 
-        interviewTracker.InterviewPopped += (int level) => {fired++; lvl_result = level;};
-        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 9)));
+        interviewTracker.InterviewPopped += (ApplicationType type) => {fired++; type_result = type;};
+        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 9, type: ApplicationType.RecruiterScreening)));
 
         interviewTracker.NotifyTimeChanged(day: 1, hour: 8);
 
@@ -113,7 +112,7 @@ public class ScheduledInterviewsTests
         interviewTracker.NotifyTimeChanged(day: 1, hour: 9);
 
         Assert.AreEqual(1, fired);
-        Assert.AreEqual(lvl_result, 1);
+        Assert.AreEqual(type_result, ApplicationType.RecruiterScreening);
     }
 
     [Test]
@@ -122,9 +121,9 @@ public class ScheduledInterviewsTests
         var interviewTracker = new ScheduledInterviews();
         int fired = 0;
 
-        interviewTracker.InterviewPopped += (int _) => fired++;
-        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 8)));
-        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 8)));
+        interviewTracker.InterviewPopped += (ApplicationType type) => fired++;
+        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 8, type: ApplicationType.RecruiterScreening)));
+        Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 8, type: ApplicationType.RecruiterScreening)));
 
         interviewTracker.NotifyTimeChanged(day: 1, hour: 8);
 
@@ -159,7 +158,7 @@ public class ScheduledInterviewsTests
             currentTimeDate,
             playerStats);
 
-        var interviewDate = new ScheduledInterviews.InterviewDate(day: 0, hour: 10, lvl: 1);
+        var interviewDate = new ScheduledInterviews.InterviewDate(day: 0, hour: 10, type: ApplicationType.RecruiterScreening);
         interviewTracker.TryAddInterviewDate(interviewDate);
 
         currentTimeDate.AdvanceTime(); // Advance to hour 10
