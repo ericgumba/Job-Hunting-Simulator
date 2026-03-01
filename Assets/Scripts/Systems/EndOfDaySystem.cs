@@ -7,7 +7,9 @@ public sealed class EndOfDaySystem
     private readonly ApplicationTracker appTracker;
     private readonly PlayerStatistics playerStats;
 
+    public event Action EndOfDayReached;
     public event Action<ApplicationType> notifyPopupCalendar;
+    public event Action<int, ApplicationType, bool> ApplicationOutcome;
 
     public EndOfDaySystem(
         CurrentTimeDate currentTimeDate,
@@ -23,6 +25,7 @@ public sealed class EndOfDaySystem
     private void OnEndOfDayReached()
     {
         Debug.Log("End of Day Reached. Advancing to next day.");
+        EndOfDayReached?.Invoke();
         ProcessOngoingApplications();
     }
 
@@ -32,11 +35,13 @@ public sealed class EndOfDaySystem
         {
             var passed = UnityEngine.Random.value < GetPassChance(type);
             appTracker.PassFailApplication(passed);
-            if (passed)
-            {
-                notifyPopupCalendar?.Invoke(type);
-            }
+            ApplicationOutcome?.Invoke(currentTimeDate.Days, type, passed);
         }
+    }
+
+    public void TriggerPopupCalendar(ApplicationType type)
+    {
+        notifyPopupCalendar?.Invoke(type);
     }
 
     private float GetPassChance(ApplicationType type)

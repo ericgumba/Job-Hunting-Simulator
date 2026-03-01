@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class PopupCalendarController : MonoBehaviour
     private EndOfDaySystem endOfDaySystem;
     private IConfirmInterviewSystem confirmInterviewSystem;
     private ApplicationType currentApplicationType;
+    public bool IsVisible => gameObject.activeSelf;
+    public event Action Closed;
     [SerializeField] private Button incrementButton;
     [SerializeField] private Button decrementButton;
     [SerializeField] private Button[] timeButtons;
@@ -89,6 +92,7 @@ public class PopupCalendarController : MonoBehaviour
             {
                 Debug.Log("Interview confirmed!");
                 gameObject.SetActive(false);
+                Closed?.Invoke();
             }
             else
             {
