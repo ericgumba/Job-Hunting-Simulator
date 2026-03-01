@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public sealed class ApplicationTracker
 {
     public event Action Changed;
-    public event Action InterviewRecorded;
     private readonly List<Application> ongoingList = new List<Application>();
     private int lastApplicationIndexProcessed = 0;
 
@@ -32,13 +31,7 @@ public sealed class ApplicationTracker
     {
         Debug.Log($"ERICGUMBA Recording interview event for type {type}");
         ongoingList.Add(new Application { Type = type, Status = ApplicationStatus.Ongoing });
-        InterviewRecorded?.Invoke();
     } 
-
-    public void Bind(ScheduledInterviews interviewTracker)
-    {
-        interviewTracker.InterviewPopped += OnInterviewPopped;
-    }
 
     public bool TryGetNextOngoingApplicationType(out ApplicationType type)
     {
@@ -80,13 +73,6 @@ public sealed class ApplicationTracker
         ongoingList[lastApplicationIndexProcessed] = app;
 
         lastApplicationIndexProcessed++; 
-        Changed?.Invoke();
-    }
-
-    private void OnInterviewPopped(ApplicationType type)
-    {
-        Debug.Log($"Interview popped for type {type}"); 
-        ongoingList.Add(new Application { Type = type, Status = ApplicationStatus.Ongoing });
         Changed?.Invoke();
     }
 

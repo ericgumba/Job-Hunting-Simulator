@@ -96,38 +96,29 @@ public class ScheduledInterviewsTests
     }
 
     [Test]
-    public void InterviewPoppedFiresWhenTimeMatchesAndRemovesEntry()
+    public void NotifyTimeChanged_RemovesMatchingInterview()
     {
         var interviewTracker = new ScheduledInterviews();
-        int fired = 0;
-        ApplicationType type_result = ApplicationType.ResumeSubmission;
-
-        interviewTracker.InterviewPopped += (ApplicationType type) => {fired++; type_result = type;};
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 9, type: ApplicationType.RecruiterScreening)));
 
         interviewTracker.NotifyTimeChanged(day: 1, hour: 8);
-
-        Assert.AreEqual(0, fired);
+        Assert.IsTrue(interviewTracker.PeekNextInterviewDate().HasValue);
 
         interviewTracker.NotifyTimeChanged(day: 1, hour: 9);
-
-        Assert.AreEqual(1, fired);
-        Assert.AreEqual(type_result, ApplicationType.RecruiterScreening);
+        Assert.IsFalse(interviewTracker.PeekNextInterviewDate().HasValue);
     }
 
     [Test]
-    public void InterviewPoppedFiresForEachMatchingInterview()
+    public void NotifyTimeChanged_RemovesAllMatchingInterviews()
     {
         var interviewTracker = new ScheduledInterviews();
-        int fired = 0;
 
-        interviewTracker.InterviewPopped += (ApplicationType type) => fired++;
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 8, type: ApplicationType.RecruiterScreening)));
         Assert.IsTrue(interviewTracker.TryAddInterviewDate(new ScheduledInterviews.InterviewDate(day: 1, hour: 8, type: ApplicationType.RecruiterScreening)));
 
         interviewTracker.NotifyTimeChanged(day: 1, hour: 8);
 
-        Assert.AreEqual(2, fired);
+        Assert.IsFalse(interviewTracker.PeekNextInterviewDate().HasValue);
     }
 
     [Test]

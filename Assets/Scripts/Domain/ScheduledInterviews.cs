@@ -21,8 +21,6 @@ public sealed class ScheduledInterviews
 
     private readonly List<InterviewDate> _interviewDates = new List<InterviewDate>();
 
-    public event Action<ApplicationType> InterviewPopped;
-
     public event Action Changed;
 
     public ScheduledInterviews()
@@ -80,7 +78,6 @@ public sealed class ScheduledInterviews
                 interviewDate.Hour == hour)
             {
                 _interviewDates.RemoveAt(i);
-                InterviewPopped?.Invoke(interviewDate.Type);
                 Changed?.Invoke();
                 sortInterviewDates();
             }

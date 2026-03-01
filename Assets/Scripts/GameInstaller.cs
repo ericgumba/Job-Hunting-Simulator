@@ -35,7 +35,6 @@ public class GameInstaller : MonoBehaviour
         timeDateTracker = new CurrentTimeDate();
         tracker = new ApplicationTracker();
         interviewTracker = new ScheduledInterviews();
-        tracker.Bind(interviewTracker);
 
         // Systems
         applySystem = new ApplyForJobSystem(tracker, timeDateTracker);
