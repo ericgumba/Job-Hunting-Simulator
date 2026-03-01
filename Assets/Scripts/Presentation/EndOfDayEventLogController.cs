@@ -6,7 +6,6 @@ public sealed class EndOfDayEventLogController : MonoBehaviour
 {
     [SerializeField] private EventLog eventLog;
     [SerializeField] private GameObject eventLogPanel;
-    [SerializeField] private float preRevealSeconds = 1f;
     [SerializeField] private float postRevealSeconds = 10f;
     [SerializeField] private PopupCalendarController popupCalendarController;
     private EndOfDaySystem endOfDaySystem;
@@ -98,18 +97,15 @@ public sealed class EndOfDayEventLogController : MonoBehaviour
         panel.SetActive(true);
         eventLog.Clear();
 
-        yield return new WaitForSeconds(preRevealSeconds);
-
-        var revealDelay = new WaitForSeconds(0.5f);
+        var revealDelay = new WaitForSeconds(0.1f);
         foreach (var outcome in pendingOutcomes)
         {
             Debug.Log($"ERICGUMBA Revealing message: {outcome.Message}");
             eventLog.AddMessage(outcome.Message);
-            if (outcome.Passed && endOfDaySystem != null)
+            if (outcome.Passed && popupCalendarController != null)
             {
-                endOfDaySystem.TriggerPopupCalendar(outcome.Type);
-                if (popupCalendarController != null)
-                    yield return new WaitUntil(() => !popupCalendarController.IsVisible);
+                popupCalendarController.ShowForType(outcome.Type);
+                yield return new WaitUntil(() => !popupCalendarController.IsVisible);
             }
             yield return revealDelay;
         }

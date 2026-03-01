@@ -48,7 +48,6 @@ public class GameInstaller : MonoBehaviour
         restController.Bind(restSystem);
         applicationsHudView.Bind(tracker);
         timeDateHudView.Bind(timeDateTracker);
-        popupCalendarController.Bind(endOfDaySystem);
         popupCalendarController.Bind(confirmInterviewSystem);
         upcomingInterviewController.Bind(interviewTracker); 
         endOfDayEventLogController.Bind(endOfDaySystem);

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class PopupCalendarController : MonoBehaviour
 {
 
-    private EndOfDaySystem endOfDaySystem;
     private IConfirmInterviewSystem confirmInterviewSystem;
     private ApplicationType currentApplicationType;
     public bool IsVisible => gameObject.activeSelf;
@@ -44,19 +43,13 @@ public class PopupCalendarController : MonoBehaviour
         UpdateDayText();
     }
 
-    public void Bind(EndOfDaySystem endOfDaySystem)
-    {
-        this.endOfDaySystem = endOfDaySystem;
-        endOfDaySystem.notifyPopupCalendar += Show; 
-    }
-
     public void Bind(IConfirmInterviewSystem confirmInterviewSystem)
     {
         this.confirmInterviewSystem = confirmInterviewSystem;
         // No-op
     }
 
-    private void Show(ApplicationType type)
+    public void ShowForType(ApplicationType type)
     {
         Debug.Log("Showing popup calendar");
         currentApplicationType = type;
@@ -84,7 +77,7 @@ public class PopupCalendarController : MonoBehaviour
     private void OnTimeButtonClicked(Button button)
     {
         Debug.Log($"Clicked time button: {button.name}");
-        if (confirmInterviewSystem != null && endOfDaySystem != null)
+        if (confirmInterviewSystem != null)
         {
             Debug.Log($"Attempting to confirm interview... {dayOffset}");
             bool confirmed = confirmInterviewSystem.ConfirmInterview(button.name, dayOffset, currentApplicationType);
@@ -125,13 +118,12 @@ public class PopupCalendarController : MonoBehaviour
 
     void OnDestroy()
     {
-        if (endOfDaySystem != null)
-            endOfDaySystem.notifyPopupCalendar -= Show;
+        // No-op
     }
 
     private void UpdateDayText()
     {
-        if (Text != null)
+        if (Text != null && confirmInterviewSystem != null)
         {
             Text.text = $"(Day {dayOffset + confirmInterviewSystem.CurrentDate()})";
         }

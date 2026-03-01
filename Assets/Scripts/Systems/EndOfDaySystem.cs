@@ -8,7 +8,6 @@ public sealed class EndOfDaySystem
     private readonly PlayerStatistics playerStats;
 
     public event Action EndOfDayReached;
-    public event Action<ApplicationType> notifyPopupCalendar;
     public event Action<int, ApplicationType, bool> ApplicationOutcome;
 
     public EndOfDaySystem(
@@ -39,10 +38,6 @@ public sealed class EndOfDaySystem
         }
     }
 
-    public void TriggerPopupCalendar(ApplicationType type)
-    {
-        notifyPopupCalendar?.Invoke(type);
-    }
 
     private float GetPassChance(ApplicationType type)
     {
