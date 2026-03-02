@@ -11,6 +11,7 @@ public class GameInstaller : MonoBehaviour
     [SerializeField] private PopupCalendarController popupCalendarController;
     [SerializeField] private UpcomingInterviewController upcomingInterviewController;
     [SerializeField] private EndOfDayEventLogController endOfDayEventLogController;
+    [SerializeField] private InterviewPopupController interviewPopupController;
 
     [Header("Config")]
     [SerializeField] private PlayerStatsConfig playerStatsConfig;
@@ -51,6 +52,8 @@ public class GameInstaller : MonoBehaviour
         popupCalendarController.Bind(confirmInterviewSystem);
         upcomingInterviewController.Bind(interviewTracker); 
         endOfDayEventLogController.Bind(endOfDaySystem);
+        if (interviewPopupController != null)
+            interviewPopupController.Bind(interviewSystem);
 
     }
 }

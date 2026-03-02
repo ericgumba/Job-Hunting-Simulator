@@ -9,6 +9,8 @@ public sealed class InterviewSystem
     private readonly CurrentTimeDate timeDateTracker;
     private readonly PlayerStatistics playerStats;
     public ScheduledInterviews ScheduledInterviews => interviewTracker;
+    public event System.Action<ApplicationType> InterviewTriggered;
+    private bool interviewInProgress;
 
     public InterviewSystem(
         ScheduledInterviews interviewTracker,
@@ -27,6 +29,9 @@ public sealed class InterviewSystem
 
     public void TryPerformInterview()
     {
+        if (interviewInProgress)
+            return;
+
         Debug.Log("Checking for interviews to perform...");
         var nextInterview = interviewTracker.PeekNextInterviewDate();
         if (!nextInterview.HasValue)
@@ -42,8 +47,17 @@ public sealed class InterviewSystem
         }
 
         applicationTracker.RecordInterviewEvent(interviewDate.Type);
+        InterviewTriggered?.Invoke(interviewDate.Type);
         interviewTracker.NotifyTimeChanged(timeDateTracker.Days, timeDateTracker.Hours);
-        timeDateTracker.AdvanceTime(); // Advance time after interview 
+        interviewInProgress = true;
+    }
+
+    public void CompleteInterview()
+    {
+        if (!interviewInProgress)
+            return;
+        interviewInProgress = false;
+        timeDateTracker.AdvanceTime(); // Advance time after interview completes
     }
 
     private float GetInterviewChance(int level)

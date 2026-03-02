@@ -25,11 +25,15 @@ Delete RejectionsTextView.cs, InterviewTextView.cs and OngoingTextView.cs and ju
 
 All textViews should display ongoing, passed, and failed.
 
-todo:
-
 Generate text on the event scroll at the end of each day
 
 Interviews are no longer triggered anymore.
+
+Create the interview system
+
+todo:
+
+wire up the interviewPopupController
 
 We need to disable buttons when animation is playing
 
