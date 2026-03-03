@@ -12,6 +12,7 @@ public class GameInstaller : MonoBehaviour
     [SerializeField] private UpcomingInterviewController upcomingInterviewController;
     [SerializeField] private EndOfDayEventLogController endOfDayEventLogController;
     [SerializeField] private InterviewPopupController interviewPopupController;
+    [SerializeField] private SankeyButtonController sankeyButtonController;
 
     [Header("Config")]
     [SerializeField] private PlayerStatsConfig playerStatsConfig;
@@ -54,6 +55,8 @@ public class GameInstaller : MonoBehaviour
         endOfDayEventLogController.Bind(endOfDaySystem);
         if (interviewPopupController != null)
             interviewPopupController.Bind(interviewSystem);
+        if (sankeyButtonController != null)
+            sankeyButtonController.Bind(tracker);
 
     }
 }

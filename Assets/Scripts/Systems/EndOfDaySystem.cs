@@ -24,8 +24,8 @@ public sealed class EndOfDaySystem
     private void OnEndOfDayReached()
     {
         Debug.Log("End of Day Reached. Advancing to next day.");
-        EndOfDayReached?.Invoke();
         ProcessOngoingApplications();
+        EndOfDayReached?.Invoke();
     }
 
     private void ProcessOngoingApplications()

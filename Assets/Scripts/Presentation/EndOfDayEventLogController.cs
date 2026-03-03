@@ -98,7 +98,9 @@ public sealed class EndOfDayEventLogController : MonoBehaviour
         eventLog.Clear();
 
         var revealDelay = new WaitForSeconds(0.1f);
-        foreach (var outcome in pendingOutcomes)
+        var outcomesSnapshot = new List<Outcome>(pendingOutcomes);
+        pendingOutcomes.Clear();
+        foreach (var outcome in outcomesSnapshot)
         {
             Debug.Log($"ERICGUMBA Revealing message: {outcome.Message}");
             eventLog.AddMessage(outcome.Message);
@@ -109,7 +111,6 @@ public sealed class EndOfDayEventLogController : MonoBehaviour
             }
             yield return revealDelay;
         }
-        pendingOutcomes.Clear();
 
         yield return new WaitForSeconds(postRevealSeconds);
 

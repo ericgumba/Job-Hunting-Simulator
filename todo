@@ -31,12 +31,14 @@ Interviews are no longer triggered anymore.
 
 Create the interview system
 
+wire up the interviewPopupController
+
+when we win we need a flow chart showing how many applications etc...
+
 todo:
 
-wire up the interviewPopupController
+wire up the flowchart / sankey chart
 
 We need to disable buttons when animation is playing
 
 We need to figure out a fun minigame for the actual interviews
-
-Lastly when we win we need a flow chart showing how many applications etc...
