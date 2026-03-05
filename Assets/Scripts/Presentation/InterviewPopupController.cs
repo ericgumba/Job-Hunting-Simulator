@@ -78,13 +78,35 @@ public sealed class InterviewPopupController : MonoBehaviour
     private void Show()
     {
         var target = panel != null ? panel : gameObject;
-        target.SetActive(true);
+        ActivateHierarchy(target.transform);
+        var rect = target.GetComponent<RectTransform>();
+        if (rect != null)
+            rect.SetAsLastSibling();
+
+        var group = target.GetComponent<CanvasGroup>();
+        if (group != null)
+        {
+            group.alpha = 1f;
+            group.interactable = true;
+            group.blocksRaycasts = true;
+        }
     }
 
     private void Hide()
     {
         var target = panel != null ? panel : gameObject;
         target.SetActive(false);
+    }
+
+    private static void ActivateHierarchy(Transform transform)
+    {
+        var current = transform;
+        while (current != null)
+        {
+            if (!current.gameObject.activeSelf)
+                current.gameObject.SetActive(true);
+            current = current.parent;
+        }
     }
 
     private void CompleteInterview()

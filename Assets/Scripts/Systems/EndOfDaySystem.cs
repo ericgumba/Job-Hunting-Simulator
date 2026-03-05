@@ -6,6 +6,7 @@ public sealed class EndOfDaySystem
     private readonly CurrentTimeDate currentTimeDate;
     private readonly ApplicationTracker appTracker;
     private readonly PlayerStatistics playerStats;
+    private bool debug = false;
 
     public event Action EndOfDayReached;
     public event Action<int, ApplicationType, bool> ApplicationOutcome;

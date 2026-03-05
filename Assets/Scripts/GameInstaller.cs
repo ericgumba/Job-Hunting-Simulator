@@ -53,6 +53,8 @@ public class GameInstaller : MonoBehaviour
         popupCalendarController.Bind(confirmInterviewSystem);
         upcomingInterviewController.Bind(interviewTracker); 
         endOfDayEventLogController.Bind(endOfDaySystem);
+        if (interviewPopupController == null)
+            interviewPopupController = FindObjectOfType<InterviewPopupController>(true);
         if (interviewPopupController != null)
             interviewPopupController.Bind(interviewSystem);
         if (sankeyButtonController != null)

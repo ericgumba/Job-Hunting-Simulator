@@ -22,6 +22,7 @@ public sealed class SankeyDiagramController : MonoBehaviour
 
     private ApplicationTracker tracker;
     private readonly List<GameObject> rows = new List<GameObject>();
+    private bool enforceContentOffsets;
 
     private void Awake()
     {
@@ -45,6 +46,9 @@ public sealed class SankeyDiagramController : MonoBehaviour
 
         var target = panel != null ? panel : gameObject;
         target.SetActive(true);
+        EnsureContentParent(target);
+        NormalizeContentOffsets();
+        enforceContentOffsets = true;
         Canvas.ForceUpdateCanvases();
 
         BuildDiagram();
@@ -54,6 +58,7 @@ public sealed class SankeyDiagramController : MonoBehaviour
     {
         var target = panel != null ? panel : gameObject;
         target.SetActive(false);
+        enforceContentOffsets = false;
     }
 
     private void BuildDiagram()
@@ -93,30 +98,88 @@ public sealed class SankeyDiagramController : MonoBehaviour
 
         float contentWidth = contentParent.rect.width;
         if (contentWidth <= 0f)
-            contentWidth = labelWidth + maxBarWidth + 120f;
+        {
+            var panelRect = panel != null ? panel.GetComponent<RectTransform>() : null;
+            if (panelRect != null)
+                contentWidth = panelRect.rect.width;
+        }
+        if (contentWidth <= 0f)
+            contentWidth = labelWidth + maxBarWidth + 120f + (gap * 2f);
 
         contentParent.sizeDelta = new Vector2(contentParent.sizeDelta.x, stages.Length * rowHeight);
 
+        const float countsWidth = 120f;
+        float availableBarWidth = contentWidth - (labelWidth + gap + countsWidth + gap);
+        float barWidth = Mathf.Clamp(availableBarWidth, 0f, maxBarWidth);
+
         for (int i = 0; i < stages.Length; i++)
         {
-            var row = CreateRow(stages[i], i, maxTotal, contentWidth);
+            var row = CreateRow(stages[i], i, maxTotal, barWidth);
             rows.Add(row);
         }
     }
 
-    private GameObject CreateRow(Stage stage, int index, int maxTotal, float contentWidth)
+    private void EnsureContentParent(GameObject target)
+    {
+        if (contentParent == null)
+        {
+            contentParent = target.GetComponent<RectTransform>();
+        }
+
+        var panelRect = target.GetComponent<RectTransform>();
+        if (panelRect == null)
+            return;
+
+        if (contentParent == panelRect)
+        {
+            var existing = panelRect.Find("SankeyContent");
+            if (existing != null)
+            {
+                contentParent = existing.GetComponent<RectTransform>();
+            }
+            else
+            {
+                var go = new GameObject("SankeyContent", typeof(RectTransform));
+                go.transform.SetParent(panelRect, false);
+                var rect = go.GetComponent<RectTransform>();
+                rect.anchorMin = Vector2.zero;
+                rect.anchorMax = Vector2.one;
+                rect.pivot = new Vector2(0.5f, 0.5f);
+                rect.offsetMin = Vector2.zero;
+                rect.offsetMax = Vector2.zero;
+                contentParent = rect;
+            }
+        }
+    }
+
+    private void NormalizeContentOffsets()
+    {
+        if (contentParent == null)
+            return;
+        contentParent.offsetMin = Vector2.zero;
+        contentParent.offsetMax = Vector2.zero;
+    }
+
+    private void LateUpdate()
+    {
+        if (!enforceContentOffsets)
+            return;
+        NormalizeContentOffsets();
+    }
+
+    private GameObject CreateRow(Stage stage, int index, int maxTotal, float barWidth)
     {
         var row = new GameObject($"Row_{stage.Name}", typeof(RectTransform));
         row.transform.SetParent(contentParent, false);
 
         var rowRect = row.GetComponent<RectTransform>();
         rowRect.anchorMin = new Vector2(0f, 1f);
-        rowRect.anchorMax = new Vector2(0f, 1f);
+        rowRect.anchorMax = new Vector2(1f, 1f);
         rowRect.pivot = new Vector2(0f, 1f);
-        rowRect.sizeDelta = new Vector2(contentWidth, rowHeight);
+        rowRect.sizeDelta = new Vector2(0f, rowHeight);
         rowRect.anchoredPosition = new Vector2(0f, -index * rowHeight);
 
-        var label = CreateText($"{stage.Name}", row.transform);
+        var label = CreateText(stage.Name, row.transform);
         var labelRect = label.GetComponent<RectTransform>();
         labelRect.anchorMin = new Vector2(0f, 0.5f);
         labelRect.anchorMax = new Vector2(0f, 0.5f);
@@ -130,10 +193,10 @@ public sealed class SankeyDiagramController : MonoBehaviour
         barRect.anchorMin = new Vector2(0f, 0.5f);
         barRect.anchorMax = new Vector2(0f, 0.5f);
         barRect.pivot = new Vector2(0f, 0.5f);
-        barRect.sizeDelta = new Vector2(maxBarWidth, barHeight);
+        barRect.sizeDelta = new Vector2(barWidth, barHeight);
         barRect.anchoredPosition = new Vector2(labelWidth + gap, 0f);
 
-        float totalWidth = maxTotal > 0 ? maxBarWidth * (stage.Total / (float)maxTotal) : 0f;
+        float totalWidth = maxTotal > 0 ? barWidth * (stage.Total / (float)maxTotal) : 0f;
         float passedWidth = stage.Total > 0 ? totalWidth * (stage.Passed / (float)stage.Total) : 0f;
         float failedWidth = totalWidth - passedWidth;
 
@@ -148,7 +211,7 @@ public sealed class SankeyDiagramController : MonoBehaviour
         countsRect.anchorMax = new Vector2(0f, 0.5f);
         countsRect.pivot = new Vector2(0f, 0.5f);
         countsRect.sizeDelta = new Vector2(120f, rowHeight);
-        countsRect.anchoredPosition = new Vector2(labelWidth + gap + maxBarWidth + gap, 0f);
+        countsRect.anchoredPosition = new Vector2(labelWidth + gap + barWidth + gap, 0f);
 
         return row;
     }
