@@ -2,13 +2,16 @@ public sealed class ApplyForJobSystem
 {
     private readonly ApplicationTracker tracker;
     private readonly CurrentTimeDate currentTime;
+    private readonly PlayerStatistics playerStats;
 
     public ApplyForJobSystem(
         ApplicationTracker tracker,
-        CurrentTimeDate currentTime)
+        CurrentTimeDate currentTime,
+        PlayerStatistics playerStats)
     {
         this.tracker = tracker;
         this.currentTime = currentTime;
+        this.playerStats = playerStats;
     }
 
     public string GetStats()
@@ -23,6 +26,7 @@ public sealed class ApplyForJobSystem
     public void Apply()
     {
         tracker.RecordResumeSubmission();
+        playerStats.AddExperience(1);
         currentTime.AdvanceTime();
     }
 }

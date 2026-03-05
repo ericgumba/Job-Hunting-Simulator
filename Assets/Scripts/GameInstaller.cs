@@ -39,7 +39,7 @@ public class GameInstaller : MonoBehaviour
         interviewTracker = new ScheduledInterviews();
 
         // Systems
-        applySystem = new ApplyForJobSystem(tracker, timeDateTracker);
+        applySystem = new ApplyForJobSystem(tracker, timeDateTracker, playerStats);
         restSystem = new RestSystem(timeDateTracker);
         confirmInterviewSystem = new ConfirmInterviewSystem(timeDateTracker, interviewTracker);
         interviewSystem = new InterviewSystem(interviewTracker, tracker, timeDateTracker, playerStats);

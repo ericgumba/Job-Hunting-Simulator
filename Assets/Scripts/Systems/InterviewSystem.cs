@@ -47,6 +47,7 @@ public sealed class InterviewSystem
         }
 
         applicationTracker.RecordInterviewEvent(interviewDate.Type);
+        playerStats.AddExperience(GetInterviewXp(interviewDate.Type));
         InterviewTriggered?.Invoke(interviewDate.Type);
         interviewTracker.NotifyTimeChanged(timeDateTracker.Days, timeDateTracker.Hours);
         interviewInProgress = true;
@@ -58,6 +59,23 @@ public sealed class InterviewSystem
             return;
         interviewInProgress = false;
         timeDateTracker.AdvanceTime(); // Advance time after interview completes
+    }
+
+    private static int GetInterviewXp(ApplicationType type)
+    {
+        switch (type)
+        {
+            case ApplicationType.RecruiterScreening:
+                return 3;
+            case ApplicationType.FirstTechnical:
+                return 6;
+            case ApplicationType.SecondTechnical:
+                return 9;
+            case ApplicationType.HiringManager:
+                return 12;
+            default:
+                return 0;
+        }
     }
 
     private float GetInterviewChance(int level)

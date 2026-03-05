@@ -9,12 +9,14 @@ public class ScheduledInterviewsTests
     {
         var applicationTracker = new ApplicationTracker();
         var currentTime = new CurrentTimeDate(startHour: 9, startDay: 0);
-        var applySystem = new ApplyForJobSystem(applicationTracker, currentTime);
+        var playerStats = new PlayerStatistics();
+        var applySystem = new ApplyForJobSystem(applicationTracker, currentTime, playerStats);
 
         applySystem.Apply();
 
         Assert.AreEqual(1, applicationTracker.TotalOngoingResumeSubmissions());
         Assert.AreEqual(10, currentTime.Hours);
+        Assert.AreEqual(1, playerStats.Experience);
     }
 
     [Test]
@@ -155,5 +157,6 @@ public class ScheduledInterviewsTests
         currentTimeDate.AdvanceTime(); // Advance to hour 10
 
         Assert.AreEqual(1, applicationTracker.TotalOngoingRecruiterScreenings());
+        Assert.AreEqual(3, playerStats.Experience);
     }
 }
