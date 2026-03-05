@@ -11,9 +11,9 @@ public sealed class PlayerStatistics
 
     public float ResumeSubmission => config.ResumeSubmission;
     public float RecruiterScreening => config.RecruiterScreening;
-    public float LevelOne => config.LevelOne;
-    public float LevelTwo => config.LevelTwo;
-    public float LevelThree => config.LevelThree;
+    public float FirstTechnical => config.FirstTechnical;
+    public float SecondTechnical => config.SecondTechnical;
+    public float HiringManager => config.HiringManager;
     public int MaxMorale => config.maxMorale;
     public int MoraleStep => config.moraleStep;
 
@@ -56,16 +56,16 @@ public sealed class PlayerStatistics
 /// 
 public readonly struct PlayerStatsConfigData
 {
-    public readonly float ResumeSubmission, RecruiterScreening, LevelOne, LevelTwo, LevelThree;
+    public readonly float ResumeSubmission, RecruiterScreening, FirstTechnical, SecondTechnical, HiringManager;
     public readonly int startingMorale, maxMorale, moraleStep;
 
     public PlayerStatsConfigData(PlayerStatsConfig cfg)
     {
         ResumeSubmission = cfg.ResumeSubmission;
         RecruiterScreening = cfg.RecruiterScreening;
-        LevelOne = cfg.LevelOne;
-        LevelTwo = cfg.LevelTwo;
-        LevelThree = cfg.LevelThree;
+        FirstTechnical = cfg.FirstTechnical;
+        SecondTechnical = cfg.SecondTechnical;
+        HiringManager = cfg.HiringManager;
 
         startingMorale = cfg.startingMorale;
         maxMorale = cfg.maxMorale;

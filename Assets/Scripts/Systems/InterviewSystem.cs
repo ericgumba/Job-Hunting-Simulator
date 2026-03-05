@@ -67,11 +67,11 @@ public sealed class InterviewSystem
             case 1:
                 return playerStats.RecruiterScreening;
             case 2:
-                return playerStats.LevelOne;
+                return playerStats.FirstTechnical;
             case 3:
-                return playerStats.LevelTwo;
+                return playerStats.SecondTechnical;
             case 4:
-                return playerStats.LevelThree;
+                return playerStats.HiringManager;
             default:
                 Debug.LogWarning($"Unknown interview level {level}. Using base interview chance.");
                 return 1;

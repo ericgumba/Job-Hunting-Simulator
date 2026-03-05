@@ -34,6 +34,7 @@ public sealed class EndOfDaySystem
         while (appTracker.TryGetNextOngoingApplicationType(out var type))
         {
             var passed = UnityEngine.Random.value < GetPassChance(type);
+            if (debug) passed = true;
             appTracker.PassFailApplication(passed);
             ApplicationOutcome?.Invoke(currentTimeDate.Days, type, passed);
         }
@@ -49,11 +50,11 @@ public sealed class EndOfDaySystem
             case ApplicationType.RecruiterScreening:
                 return playerStats.RecruiterScreening;
             case ApplicationType.FirstTechnical:
-                return playerStats.LevelOne;
+                return playerStats.FirstTechnical;
             case ApplicationType.SecondTechnical:
-                return playerStats.LevelTwo;
+                return playerStats.SecondTechnical;
             case ApplicationType.HiringManager:
-                return playerStats.LevelThree;
+                return playerStats.HiringManager;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Invalid application type");
         }

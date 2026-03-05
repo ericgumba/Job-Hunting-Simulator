@@ -31,6 +31,7 @@ public sealed class ApplicationTracker
     {
         Debug.Log($"ERICGUMBA Recording interview event for type {type}");
         ongoingList.Add(new Application { Type = type, Status = ApplicationStatus.Ongoing });
+        Changed?.Invoke();
     } 
 
     public bool TryGetNextOngoingApplicationType(out ApplicationType type)

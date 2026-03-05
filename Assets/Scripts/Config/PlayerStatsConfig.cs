@@ -14,14 +14,14 @@ public sealed class PlayerStatsConfig : ScriptableObject
 
         // ResumeSubmission,
         // RecruiterScreening,
-        // LevelOne,
-        // LevelTwo,
-        // LevelThree
+        // FirstTechnical,
+        // SecondTechnical,
+        // HiringManager
     [Range(0f, 1f)] public float ResumeSubmission = 0.01f;
     [Range(0f, 1f)] public float RecruiterScreening = 0.05f;
-    [Range(0f, 1f)] public float LevelOne = 0.05f;
-    [Range(0f, 1f)] public float LevelTwo = 0.05f;
-    [Range(0f, 1f)] public float LevelThree = 0.10f;
+    [Range(0f, 1f)] public float FirstTechnical = 0.05f;
+    [Range(0f, 1f)] public float SecondTechnical = 0.05f;
+    [Range(0f, 1f)] public float HiringManager = 0.10f;
     [Header("Morale")]
     public int startingMorale = 100;
     public int maxMorale = 100;
