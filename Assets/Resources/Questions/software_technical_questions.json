@@ -1,0 +1,94 @@
+{
+  "questions": [
+    {
+      "id": "technical_001",
+      "round": "FirstTechnical",
+      "category": "Trivia",
+      "prompt": "What is the average time complexity of hash table lookup?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+      "correctIndex": 0
+    },
+    {
+      "id": "technical_002",
+      "round": "FirstTechnical",
+      "category": "Trivia",
+      "prompt": "Which data structure follows LIFO order?",
+      "options": ["Queue", "Stack", "Heap", "Graph"],
+      "correctIndex": 1
+    },
+    {
+      "id": "technical_003",
+      "round": "FirstTechnical",
+      "category": "Trivia",
+      "prompt": "What does HTTP status code 404 mean?",
+      "options": ["Unauthorized", "Server Error", "Not Found", "Created"],
+      "correctIndex": 2
+    },
+    {
+      "id": "technical_004",
+      "round": "FirstTechnical",
+      "category": "Trivia",
+      "prompt": "In C#, which keyword defines a type that cannot be inherited?",
+      "options": ["static", "sealed", "private", "readonly"],
+      "correctIndex": 1
+    },
+    {
+      "id": "technical_005",
+      "round": "FirstTechnical",
+      "category": "Trivia",
+      "prompt": "Which SQL statement is used to retrieve rows?",
+      "options": ["SELECT", "INSERT", "UPDATE", "DELETE"],
+      "correctIndex": 0
+    },
+    {
+      "id": "technical_006",
+      "round": "SecondTechnical",
+      "category": "Trivia",
+      "prompt": "Which sorting algorithm has O(n log n) average time and uses divide-and-conquer?",
+      "options": ["Bubble Sort", "Quick Sort", "Insertion Sort", "Selection Sort"],
+      "correctIndex": 1
+    },
+    {
+      "id": "technical_007",
+      "round": "SecondTechnical",
+      "category": "Trivia",
+      "prompt": "What is a race condition?",
+      "options": [
+        "A database index scan optimization",
+        "When output depends on unpredictable thread timing",
+        "A memory leak in garbage-collected languages",
+        "A network timeout during API calls"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "id": "technical_008",
+      "round": "SecondTechnical",
+      "category": "Trivia",
+      "prompt": "Which principle suggests software entities should be open for extension but closed for modification?",
+      "options": ["KISS", "YAGNI", "Open/Closed Principle", "DRY"],
+      "correctIndex": 2
+    },
+    {
+      "id": "technical_009",
+      "round": "SecondTechnical",
+      "category": "Trivia",
+      "prompt": "In Big-O terms, what is the complexity of binary search on a sorted array?",
+      "options": ["O(1)", "O(log n)", "O(n)", "O(n^2)"],
+      "correctIndex": 1
+    },
+    {
+      "id": "technical_010",
+      "round": "SecondTechnical",
+      "category": "Trivia",
+      "prompt": "Which strategy best helps prevent SQL injection?",
+      "options": [
+        "String concatenation with escaped quotes",
+        "Parameterized queries",
+        "Using only GET requests",
+        "Increasing database timeout"
+      ],
+      "correctIndex": 1
+    }
+  ]
+}

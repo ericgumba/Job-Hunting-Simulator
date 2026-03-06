@@ -1,0 +1,134 @@
+{
+  "questions": [
+    {
+      "id": "recruiter_001",
+      "round": "RecruiterScreening",
+      "category": "Behavioral",
+      "prompt": "Tell me about a time you had to learn something quickly to deliver work.",
+      "options": [
+        "I broke the skill into daily goals, shipped a smaller first milestone, and documented gaps for follow-up.",
+        "I stayed late and figured it out eventually.",
+        "I asked a teammate to do it for me so we could move faster.",
+        "I avoided that task and focused on things I already knew."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "recruiter_002",
+      "round": "RecruiterScreening",
+      "category": "Behavioral",
+      "prompt": "How do you handle conflict with a coworker?",
+      "options": [
+        "I align on shared goals, clarify assumptions, and agree on a concrete next step.",
+        "I ignore it and hope it goes away.",
+        "I escalate immediately before talking to them.",
+        "I prove I am right in front of the team."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "recruiter_003",
+      "round": "RecruiterScreening",
+      "category": "Behavioral",
+      "prompt": "Describe a project you are proud of.",
+      "options": [
+        "I explain the impact, constraints, what I owned, and what I would improve next time.",
+        "It was great because everyone said so.",
+        "I mostly did whatever my manager told me.",
+        "I cannot think of one."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "recruiter_004",
+      "round": "RecruiterScreening",
+      "category": "Behavioral",
+      "prompt": "How do you prioritize when everything feels urgent?",
+      "options": [
+        "I rank by business impact, risk, and deadlines, then communicate tradeoffs early.",
+        "I do whichever task is easiest first.",
+        "I wait for reminders from stakeholders.",
+        "I multitask all tasks at once."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "recruiter_005",
+      "round": "RecruiterScreening",
+      "category": "Behavioral",
+      "prompt": "Tell me about a time you made a mistake.",
+      "options": [
+        "I owned it quickly, fixed root cause, and added a safeguard to prevent repeats.",
+        "I did not make mistakes on important projects.",
+        "I blamed unclear requirements.",
+        "I fixed it silently so nobody would notice."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "recruiter_006",
+      "round": "RecruiterScreening",
+      "category": "Behavioral",
+      "prompt": "How do you receive critical feedback?",
+      "options": [
+        "I ask clarifying questions, summarize action items, and follow up with results.",
+        "I defend my original approach until people agree.",
+        "I take it personally and disengage.",
+        "I nod but usually ignore it."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "recruiter_007",
+      "round": "RecruiterScreening",
+      "category": "Behavioral",
+      "prompt": "How do you collaborate with non-technical teammates?",
+      "options": [
+        "I translate technical choices into user impact and keep updates short and regular.",
+        "I only discuss implementation details.",
+        "I let my manager handle communication.",
+        "I avoid meetings and send long docs later."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "recruiter_008",
+      "round": "RecruiterScreening",
+      "category": "Behavioral",
+      "prompt": "Describe a time you improved a process.",
+      "options": [
+        "I found a bottleneck, proposed a small experiment, measured results, and rolled it out.",
+        "I complained until someone else changed it.",
+        "I made an undocumented change and moved on.",
+        "I left the process alone because change is risky."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "recruiter_009",
+      "round": "RecruiterScreening",
+      "category": "Behavioral",
+      "prompt": "What motivates you at work?",
+      "options": [
+        "Solving meaningful problems, learning fast, and delivering measurable value to users.",
+        "Only promotions and titles.",
+        "Avoiding difficult tasks.",
+        "Doing exactly the minimum needed."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "recruiter_010",
+      "round": "RecruiterScreening",
+      "category": "Behavioral",
+      "prompt": "Why are you interested in this role?",
+      "options": [
+        "The role matches my strengths, has clear product impact, and offers room to grow.",
+        "I am applying everywhere without reading job descriptions.",
+        "I only care about a short commute.",
+        "I mostly want less responsibility."
+      ],
+      "correctIndex": 0
+    }
+  ]
+}

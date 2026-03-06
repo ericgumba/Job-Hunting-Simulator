@@ -1,0 +1,134 @@
+{
+  "questions": [
+    {
+      "id": "manager_001",
+      "round": "HiringManager",
+      "category": "Behavioral",
+      "prompt": "A key project is behind schedule. What is your first move?",
+      "options": [
+        "Re-scope by impact, align owners, and communicate an updated delivery plan.",
+        "Work silently and hope to catch up.",
+        "Delay status updates until there is good news.",
+        "Add more meetings without changing plan."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "manager_002",
+      "round": "HiringManager",
+      "category": "Behavioral",
+      "prompt": "How do you handle competing requests from two stakeholders?",
+      "options": [
+        "Clarify business outcomes, rank by impact and risk, and get explicit priority agreement.",
+        "Pick the one who asks most often.",
+        "Say yes to both and decide later.",
+        "Ignore both until leadership decides."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "manager_003",
+      "round": "HiringManager",
+      "category": "Behavioral",
+      "prompt": "Your teammate is underperforming. What do you do?",
+      "options": [
+        "Set clear expectations, offer support, and track progress with regular check-ins.",
+        "Complain to others and avoid direct conversation.",
+        "Take over their tasks permanently.",
+        "Immediately remove them from all projects."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "manager_004",
+      "round": "HiringManager",
+      "category": "Behavioral",
+      "prompt": "How do you measure success of a feature launch?",
+      "options": [
+        "Define target metrics before launch and compare outcomes against baseline.",
+        "Judge by how hard the team worked.",
+        "Assume success if no one complains.",
+        "Only track lines of code shipped."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "manager_005",
+      "round": "HiringManager",
+      "category": "Behavioral",
+      "prompt": "A production incident occurs late Friday. What is the best response?",
+      "options": [
+        "Stabilize service first, communicate status, then run a blameless postmortem.",
+        "Wait until Monday to investigate.",
+        "Focus on identifying who caused it.",
+        "Disable alerts to reduce noise."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "manager_006",
+      "round": "HiringManager",
+      "category": "Behavioral",
+      "prompt": "How do you decide between shipping fast and maintaining quality?",
+      "options": [
+        "Protect critical quality bars, then trade scope not standards.",
+        "Always ship fast even if reliability drops.",
+        "Never ship unless perfect.",
+        "Let engineers decide without product context."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "manager_007",
+      "round": "HiringManager",
+      "category": "Behavioral",
+      "prompt": "What is your approach to mentoring junior engineers?",
+      "options": [
+        "Set growth goals, pair on real tasks, and provide specific, frequent feedback.",
+        "Give only easy tasks so mistakes are impossible.",
+        "Correct every detail without explaining why.",
+        "Avoid mentoring to save time."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "manager_008",
+      "round": "HiringManager",
+      "category": "Behavioral",
+      "prompt": "How do you communicate technical debt to leadership?",
+      "options": [
+        "Translate debt into delivery risk, incident risk, and cost with concrete examples.",
+        "Use only deep technical terms.",
+        "Hide debt because it sounds negative.",
+        "Request a full rewrite immediately."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "manager_009",
+      "round": "HiringManager",
+      "category": "Behavioral",
+      "prompt": "A project failed to meet goals. What does strong ownership look like?",
+      "options": [
+        "Share accountability, analyze root causes, and commit to corrective actions.",
+        "Deflect blame to requirements.",
+        "Declare the goals unrealistic and move on.",
+        "Avoid discussing failure publicly."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "id": "manager_010",
+      "round": "HiringManager",
+      "category": "Behavioral",
+      "prompt": "How would you build trust with a new cross-functional partner?",
+      "options": [
+        "Align on expectations early, follow through consistently, and surface risks proactively.",
+        "Promise aggressive timelines before technical review.",
+        "Keep communication minimal to reduce interruptions.",
+        "Only engage when blockers appear."
+      ],
+      "correctIndex": 0
+    }
+  ]
+}
